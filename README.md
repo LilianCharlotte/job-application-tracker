@@ -1,4 +1,4 @@
 # application-tracker
 
 
-## Tracks your applications and job postings
+## Helps track the job postings you're interested in and all your applications.
