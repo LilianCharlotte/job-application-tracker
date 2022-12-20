@@ -14,7 +14,7 @@ export default function useUser(id: string) {
 
     function findUserById(id: string) {
         getUserById(id)
-            .then(data => setUser(data.data))
+            .then(data => setUser(data))
             .catch(console.error)
     }
 
