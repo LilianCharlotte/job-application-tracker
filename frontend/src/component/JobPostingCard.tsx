@@ -27,7 +27,6 @@ export default function JobPostingCard(props: JobPostingCardProps) {
             </Typography>
             <CardActions>
                 <Button size="small">View</Button>
-                <Button size="small">Move</Button>
             </CardActions>
 
         </CardContent>
