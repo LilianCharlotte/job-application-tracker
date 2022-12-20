@@ -11,7 +11,7 @@ export default function JobPostingCard(props: JobPostingCardProps) {
         JobPosting
         <p>{props.jobPosting.jobPostingLink}</p>
         <p>{props.jobPosting.jobDescription}</p>
-        <p>Work from home: {props.jobPosting.isRemote} </p>
+        <p>Work from home: {props.jobPosting.isRemote? "yes" : "no"} </p>
     </div>)
 
 
