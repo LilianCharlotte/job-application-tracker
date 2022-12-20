@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +23,11 @@ public class UserController {
     @GetMapping("/user")
     public List<User> listUsers() {
         return userService.list();
+    }
+
+    @GetMapping("/user/{id}")
+    public Optional<User> getStudent(@PathVariable String id) {
+        return userService.findById(id);
     }
 
     @PostMapping("/user")

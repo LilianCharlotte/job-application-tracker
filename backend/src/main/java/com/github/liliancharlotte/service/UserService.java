@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -33,6 +34,10 @@ public class UserService {
         String generatedUserId = idService.generateId();
         User user = createUser(userRequest, generatedUserId);
         return userRepo.save(user);
+    }
+
+    public Optional<User> findById(String id){
+        return userRepo.findById(id);
     }
 
 }
