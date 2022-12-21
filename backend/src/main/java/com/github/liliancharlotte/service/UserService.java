@@ -3,7 +3,6 @@ package com.github.liliancharlotte.service;
 import com.github.liliancharlotte.model.User;
 import com.github.liliancharlotte.model.UserRequest;
 import com.github.liliancharlotte.repository.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,7 +28,7 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    public Optional<User> findById(String id){
+    public Optional<User> findById(String id) {
         return userRepo.findById(id);
     }
 
