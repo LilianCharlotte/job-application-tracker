@@ -26,12 +26,12 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public Optional<User> getStudent(@PathVariable String id) {
+    public Optional<User> getUserById(@PathVariable String id) {
         return userService.findById(id);
     }
 
     @PostMapping("/user")
-    public User addStudent(@RequestBody UserRequest userRequest) {
+    public User addUser(@RequestBody UserRequest userRequest) {
         return userService.addUser(userRequest);
     }
 }
