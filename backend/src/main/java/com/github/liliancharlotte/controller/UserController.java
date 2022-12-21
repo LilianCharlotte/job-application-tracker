@@ -6,7 +6,6 @@ import com.github.liliancharlotte.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,10 +19,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user")
-    public List<User> listUsers() {
-        return userService.list();
-    }
 
     @GetMapping("/user/{id}")
     public Optional<User> getUserById(@PathVariable String id) {
