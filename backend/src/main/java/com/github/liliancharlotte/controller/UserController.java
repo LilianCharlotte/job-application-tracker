@@ -14,7 +14,7 @@ class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    UserController(UserService userService) {
         this.userService = userService;
     }
     @GetMapping("/user/{id}")
