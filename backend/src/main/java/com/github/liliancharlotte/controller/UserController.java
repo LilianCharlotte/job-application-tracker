@@ -18,8 +18,6 @@ class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-
     @GetMapping("/user/{id}")
     public Optional<User> getUserById(@PathVariable String id) {
         return userService.findById(id);
