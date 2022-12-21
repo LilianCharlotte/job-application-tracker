@@ -1,5 +1,5 @@
 import {JobPosting} from "../model/JobPosting";
-import {Box, Button, Card, CardActions, CardContent, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
 
 export type JobPostingCardProps = {
     jobPosting: JobPosting
@@ -8,8 +8,8 @@ export type JobPostingCardProps = {
 export default function JobPostingCard(props: JobPostingCardProps) {
 
 
-    return (<Box m={2}>
-        <Card sx={{ minWidth: 275, maxWidth: 300 }}>
+    return (
+        <Card sx={{ m:'1rem', minWidth: 275, maxWidth: 300 }}>
         <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" textAlign="left" gutterBottom>
            JobPosting
@@ -31,5 +31,5 @@ export default function JobPostingCard(props: JobPostingCardProps) {
 
         </CardContent>
         </Card>
-    </Box>)
+    )
 }
