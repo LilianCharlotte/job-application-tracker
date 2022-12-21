@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 class UserControllerTest {
+    private static final String USER_ENDPOINT = "/api/user";
 
     @Autowired
     MockMvc mockMvc;
@@ -33,29 +34,28 @@ class UserControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    private static final String userEndPoint = "/api/user";
-
-
     @Test
     void addUser_expectStatusToBeOkAndCompareNameAndJobPostings() throws Exception {
-        String response = mockMvc.perform(post(userEndPoint)
+        String response = mockMvc.perform(post(USER_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
                                         {
-                                        "name": "test",
-                                        "jobPostings":[{
-                                            "id": "12345",
-                                            "companyName": "testCompany",
-                                            "isUnsolicited": true,
-                                            "jobTitle": "",
-                                            "jobDescription": "",
-                                            "jobPostingLink": "testCompany.com",
-                                            "isRemote": false,
-                                            "locatedAt": "Berlin"
-                                            }]
+                                            "name": "test",
+                                            "jobPostings": [
+                                                {
+                                                    "id": "12345",
+                                                    "companyName": "testCompany",
+                                                    "isUnsolicited": true,
+                                                    "jobTitle": "",
+                                                    "jobDescription": "",
+                                                    "jobPostingLink": "testCompany.com",
+                                                    "isRemote": false,
+                                                    "locatedAt": "Berlin"
+                                                }
+                                            ]
                                         }
-                                                """
+                                                    """
                         ))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -73,7 +73,7 @@ class UserControllerTest {
         User expectedUser = new User("13", "test", new ArrayList<>());
         userRepo.save(expectedUser);
 
-        String response = mockMvc.perform(get(userEndPoint + "/13"))
+        String response = mockMvc.perform(get(USER_ENDPOINT + "/13"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
