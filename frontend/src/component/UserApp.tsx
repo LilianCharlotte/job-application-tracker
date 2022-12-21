@@ -7,8 +7,11 @@ export default function UserApp() {
 
 
     return (<div>
-        {user !== undefined && <JobPostingGallery user={user}/>}
-        {user===undefined&&<p>User is undefined.</p>}
+        {user ?
+            <JobPostingGallery user={user}/>
+            :
+            <p>User is undefined.</p>
+        }
     </div>)
 
 }

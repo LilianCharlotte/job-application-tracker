@@ -14,7 +14,6 @@ public class UserService {
     private final UserRepo userRepo;
     private final IdService idService;
 
-    @Autowired
     public UserService(UserRepo userRepo, IdService idService) {
         this.userRepo = userRepo;
         this.idService = idService;
