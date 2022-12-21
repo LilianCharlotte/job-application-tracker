@@ -33,7 +33,7 @@ class UserControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    String userEndPoint = "/api/user";
+    private static final String userEndPoint = "/api/user";
 
 
     @Test
