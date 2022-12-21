@@ -6,7 +6,6 @@ import com.github.liliancharlotte.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,10 +18,6 @@ public class UserService {
     public UserService(UserRepo userRepo, IdService idService) {
         this.userRepo = userRepo;
         this.idService = idService;
-    }
-
-    public List<User> list() {
-        return userRepo.findAll();
     }
 
     public User createUser(UserRequest userRequest, String id) {
