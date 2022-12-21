@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class UserController {
+class UserController {
 
     private final UserService userService;
 
