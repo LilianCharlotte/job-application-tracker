@@ -9,7 +9,7 @@ export default function JobPostingGallery(props: JobPostingGalleryProps) {
 
 
     return (<div>
-        {props.user!==null&&props.user.jobPostings.length!==0&&props.user.jobPostings.map(
+        {props.user?.jobPostings.length!==0&&props.user.jobPostings.map(
             jobPosting => <JobPostingCard jobPosting={jobPosting} key={jobPosting.id}/>)
         }
     </div>)
