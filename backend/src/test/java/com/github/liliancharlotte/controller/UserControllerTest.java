@@ -44,16 +44,16 @@ class UserControllerTest {
                                 """
                                         {
                                         "name": "test",
-                                        "jobPostings": [{
-                                        "id": "12345",
-                                        "companyName": "testCompany",
-                                        "isUnsolicited": true,
-                                        "jobTitle": "",
-                                        "jobDescription": "",
-                                        "jobPostingLink": "testCompany.com",
-                                        "isRemote": false,
-                                        "locatedAt": "Berlin"
-                                        }]
+                                        "jobPostings":[{
+                                            "id": "12345",
+                                            "companyName": "testCompany",
+                                            "isUnsolicited": true,
+                                            "jobTitle": "",
+                                            "jobDescription": "",
+                                            "jobPostingLink": "testCompany.com",
+                                            "isRemote": false,
+                                            "locatedAt": "Berlin"
+                                            }]
                                         }
                                                 """
                         ))
@@ -73,7 +73,7 @@ class UserControllerTest {
         User expectedUser = new User("13", "test", new ArrayList<>());
         userRepo.save(expectedUser);
 
-        String response = mockMvc.perform(get(userEndPoint+"/13"))
+        String response = mockMvc.perform(get(userEndPoint + "/13"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -82,8 +82,6 @@ class UserControllerTest {
         User actualUser = objectMapper.readValue(response, User.class);
         assertEquals(expectedUser, actualUser);
     }
-
-
 
 
 }
