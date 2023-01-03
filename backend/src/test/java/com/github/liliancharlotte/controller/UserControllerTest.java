@@ -1,6 +1,7 @@
 package com.github.liliancharlotte.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.liliancharlotte.model.ColumnStatus;
 import com.github.liliancharlotte.model.JobPosting;
 import com.github.liliancharlotte.model.User;
 import com.github.liliancharlotte.repository.UserRepo;
@@ -11,12 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -51,7 +51,8 @@ class UserControllerTest {
                                                     "jobDescription": "",
                                                     "jobPostingLink": "testCompany.com",
                                                     "isRemote": false,
-                                                    "locatedAt": "Berlin"
+                                                    "locatedAt": "Berlin",
+                                                    "status": "INTERESTED_IN"
                                                 }
                                             ]
                                         }
@@ -64,7 +65,7 @@ class UserControllerTest {
 
         User actualUser = objectMapper.readValue(response, User.class);
         assertEquals("test", actualUser.name());
-        JobPosting expectedJobPosting = new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", false, "Berlin");
+        JobPosting expectedJobPosting = new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", false, "Berlin", ColumnStatus.INTERESTED_IN);
         assertEquals(expectedJobPosting, actualUser.jobPostings().get(0));
     }
 
