@@ -1,4 +1,5 @@
 package com.github.liliancharlotte.model;
+
 import org.springframework.data.annotation.Id;
 
 public record JobPosting(
@@ -10,5 +11,6 @@ public record JobPosting(
         String jobDescription,
         String jobPostingLink,
         boolean isRemote,
-        String locatedAt) {
+        String locatedAt,
+        ColumnStatus status) {
 }
