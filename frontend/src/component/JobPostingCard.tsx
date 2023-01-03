@@ -9,7 +9,7 @@ export default function JobPostingCard(props: JobPostingCardProps) {
 
 
     return (
-        <Card sx={{m: '0.5rem', maxWidth: 245, maxHeight: 185}}>
+        <Card sx={{m: '0.5rem', maxWidth: 245, maxHeight: 185, transform: 'scale(0.9)'}}>
             <CardContent>
                 <Typography sx={{fontSize: 10}} color="text.secondary" textAlign="left" gutterBottom>
                     JobPosting
