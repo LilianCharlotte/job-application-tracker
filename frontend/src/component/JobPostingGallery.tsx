@@ -14,7 +14,7 @@ export default function JobPostingGallery(props: JobPostingGalleryProps) {
             <Grid item>
                 <Box>
                     Interested in
-                    {props.user?.jobPostings.length !== 0 && props.user.jobPostings.filter(jobPosting => jobPosting.status === "INTERESTED_IN").map(
+                    {props.user?.jobPostings.length > 0 && props.user.jobPostings.filter(jobPosting => jobPosting.status === "INTERESTED_IN").map(
                         filteredJobPosting => <JobPostingCard jobPosting={filteredJobPosting}
                                                               key={filteredJobPosting.id}/>)
                     }
@@ -23,7 +23,7 @@ export default function JobPostingGallery(props: JobPostingGalleryProps) {
             <Grid item>
                 <Box>
                     Currently working on
-                    {props.user?.jobPostings.length !== 0 && props.user.jobPostings.filter(jobPosting => jobPosting.status === "CURRENTLY_WORKING_ON").map(
+                    {props.user?.jobPostings.length > 0 && props.user.jobPostings.filter(jobPosting => jobPosting.status === "CURRENTLY_WORKING_ON").map(
                         filteredJobPosting => <JobPostingCard jobPosting={filteredJobPosting}
                                                               key={filteredJobPosting.id}/>)
                     }
