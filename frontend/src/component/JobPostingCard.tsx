@@ -1,5 +1,5 @@
 import {JobPosting} from "../model/JobPosting";
-import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, Link, styled, Typography} from "@mui/material";
 
 export type JobPostingCardProps = {
     jobPosting: JobPosting
@@ -7,10 +7,17 @@ export type JobPostingCardProps = {
 
 export default function JobPostingCard(props: JobPostingCardProps) {
 
+    const CardContentLessPadding = styled(CardContent)(`
+  padding: 4;
+  &:last-child {
+    padding-bottom: 0;
+  }
+`);
+
 
     return (
-        <Card sx={{m: '0.5rem', maxWidth: 245, maxHeight: 185, transform: 'scale(0.9)'}}>
-            <CardContent>
+        <Card sx={{m: '0.5rem', maxWidth: 245, transform: 'scale(0.9)'}}>
+            <CardContentLessPadding>
                 <Typography sx={{fontSize: 10}} color="text.secondary" textAlign="left" gutterBottom>
                     JobPosting
                 </Typography>
@@ -21,15 +28,17 @@ export default function JobPostingCard(props: JobPostingCardProps) {
                     {!props.jobPosting.isUnsolicited ? props.jobPosting.jobTitle : "write an unsolicited application"}
                 </Typography>
                 <Typography sx={{fontSize: 11}} variant="body2">
-                    <a href={props.jobPosting.jobPostingLink}>{props.jobPosting.jobPostingLink}</a> <br/>
+                    <Link href={props.jobPosting.jobPostingLink}
+                          underline="hover" color="secondary">{props.jobPosting.jobPostingLink}</Link>
+                    <br/>
                     located in: {props.jobPosting.locatedAt}<br/>
                     working remotely: {props.jobPosting.isRemote ? "yes" : "no"}<br/>
                 </Typography>
                 <CardActions>
-                    <Button size="small">View</Button>
+                    <Button size="small" variant="contained">View</Button>
                 </CardActions>
 
-            </CardContent>
+            </CardContentLessPadding>
         </Card>
     )
 }
