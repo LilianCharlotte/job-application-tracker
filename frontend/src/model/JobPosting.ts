@@ -1,7 +1,4 @@
-export enum ColumnStatus {
-    INTERESTED_IN = "INTERESTED_IN",
-    CURRENTLY_WORKING_ON = "CURRENTLY_WORKING_ON"
-}
+export type ColumnStatus = "INTERESTED_IN" | "CURRENTLY_WORKING_ON"
 
 export type JobPosting = {
     id: string,
