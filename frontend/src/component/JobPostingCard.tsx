@@ -1,11 +1,13 @@
 import {JobPosting} from "../model/JobPosting";
 import {Button, Card, CardActions, CardContent, Link, styled, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 export type JobPostingCardProps = {
     jobPosting: JobPosting
 }
 
 export default function JobPostingCard(props: JobPostingCardProps) {
+    const navigate = useNavigate();
 
     const CardContentLessPadding = styled(CardContent)(`
   padding: 4;
@@ -14,6 +16,9 @@ export default function JobPostingCard(props: JobPostingCardProps) {
   }
 `);
 
+    function viewJobPostingDetails() {
+        navigate('/details', {state: {jobPosting: props.jobPosting}});
+    }
 
     return (
         <Card sx={{m: '0.5rem', maxWidth: 245, transform: 'scale(0.9)'}}>
@@ -35,7 +40,7 @@ export default function JobPostingCard(props: JobPostingCardProps) {
                     working remotely: {props.jobPosting.isRemote ? "yes" : "no"}<br/>
                 </Typography>
                 <CardActions>
-                    <Button size="small" variant="contained">View</Button>
+                    <Button onClick={viewJobPostingDetails} size="small" variant="contained">View</Button>
                 </CardActions>
 
             </CardContentLessPadding>

@@ -1,6 +1,8 @@
 import useUser from "../hook/useUser";
 import JobPostingGallery from "./JobPostingGallery";
 import {Container, Grid} from "@mui/material";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import JobPostingDetails from "./JobPostingDetails";
 
 export default function UserApp() {
 
@@ -18,11 +20,15 @@ export default function UserApp() {
         >
             <Container
                 sx={{backgroundColor: 'primary', textAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
-                {user ?
-                    <JobPostingGallery user={user}/>
-                    :
-                    <p>User is undefined.</p>
-                }
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="" element={user ?
+                            <JobPostingGallery user={user}/>
+                            :
+                            <p>User is undefined.</p>}/>
+                        <Route path="/details" element={<JobPostingDetails/>}/>
+                    </Routes>
+                </BrowserRouter>
             </Container>
         </Grid>
     </div>

@@ -8,9 +8,7 @@ export type JobPostingGalleryProps = {
 
 export default function JobPostingGallery(props: JobPostingGalleryProps) {
 
-    return <div>
-
-        <Grid container spacing={2} sx={{color: 'white'}}>
+    return <Grid container spacing={2} sx={{color: 'white'}}>
             <Grid item>
                 <Box>
                     Interested in
@@ -30,6 +28,4 @@ export default function JobPostingGallery(props: JobPostingGalleryProps) {
                 </Box>
             </Grid>
         </Grid>
-    </div>
-
 }
