@@ -9,17 +9,16 @@ export default function UserApp() {
     const {user} = useUser("1")
 
 
-    return <div>
-        <Grid
+    return <Grid
             container
             spacing={0}
             direction="column"
             alignItems="center"
             justifyContent="center"
-            style={{minHeight: '100vh'}}
+            sx={{minHeight: '100vh', p:'7rem'}}
         >
             <Container
-                sx={{backgroundColor: 'primary', textAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
+                sx={{backgroundColor: 'primary', alignItems: 'center', justifyContent: 'center'}}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="" element={user ?
@@ -31,6 +30,4 @@ export default function UserApp() {
                 </BrowserRouter>
             </Container>
         </Grid>
-    </div>
-
 }

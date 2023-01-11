@@ -1,5 +1,5 @@
 import {JobPosting} from "../model/JobPosting";
-import {Button, Card, CardActions, CardContent, Link, styled, Typography} from "@mui/material";
+import {Box, Button, Card, CardActions, CardContent, Link, styled, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 export type JobPostingCardProps = {
@@ -21,29 +21,33 @@ export default function JobPostingCard(props: JobPostingCardProps) {
     }
 
     return (
-        <Card sx={{m: '0.5rem', maxWidth: 245, transform: 'scale(0.9)'}}>
-            <CardContentLessPadding>
-                <Typography sx={{fontSize: 10}} color="text.secondary" textAlign="left" gutterBottom>
-                    JobPosting
-                </Typography>
-                <Typography sx={{fontSize: 18}} variant="h5" component="div">
-                    {props.jobPosting.companyName}
-                </Typography>
-                <Typography sx={{mb: 1.5, fontSize: 13}} color="text.secondary">
-                    {!props.jobPosting.isUnsolicited ? props.jobPosting.jobTitle : "write an unsolicited application"}
-                </Typography>
-                <Typography sx={{fontSize: 11}} variant="body2">
-                    <Link href={props.jobPosting.jobPostingLink}
-                          underline="hover" color="secondary">{props.jobPosting.jobPostingLink}</Link>
-                    <br/>
-                    located in: {props.jobPosting.locatedAt}<br/>
-                    working remotely: {props.jobPosting.isRemote ? "yes" : "no"}<br/>
-                </Typography>
-                <CardActions>
-                    <Button onClick={viewJobPostingDetails} size="small" variant="contained">View</Button>
-                </CardActions>
+        <Typography textAlign={"center"}>
+            <Card sx={{m: '0.5rem', maxWidth: 245, transform: 'scale(0.9)'}} variant="outlined">
+                <CardContentLessPadding>
+                    <Typography sx={{fontSize: 10}} color="text.secondary" textAlign="left" gutterBottom>
+                        JobPosting
+                    </Typography>
+                    <Typography sx={{fontSize: 18}} variant="h5" component="div">
+                        {props.jobPosting.companyName}
+                    </Typography>
+                    <Typography sx={{mb: 1.5, fontSize: 13}} color="text.secondary">
+                        {!props.jobPosting.isUnsolicited ? props.jobPosting.jobTitle : "write an unsolicited application"}
+                    </Typography>
+                    <Typography sx={{fontSize: 11, wordWrap: "break-word"}} variant="body2">
+                        <Box sx={{maxWidth: 185}}>
+                            <Link href={props.jobPosting.jobPostingLink}
+                                  underline="hover" color="secondary">{props.jobPosting.jobPostingLink}</Link>
+                            <br/>
+                            located in: {props.jobPosting.locatedAt}<br/>
+                            working remotely: {props.jobPosting.isRemote ? "yes" : "no"}
+                        </Box>
+                    </Typography>
+                    <CardActions>
+                        <Button onClick={viewJobPostingDetails} size="small" variant="contained">View</Button>
+                    </CardActions>
 
-            </CardContentLessPadding>
-        </Card>
+                </CardContentLessPadding>
+            </Card>
+        </Typography>
     )
 }
