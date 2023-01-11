@@ -8,9 +8,9 @@ export default function JobPostingDetails() {
 
 
     return (
-        <Card sx={{display: 'flex', ml:'15rem', mr:"15rem"}}>
-            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                <CardContent sx={{flex: '1 0 auto'}}>
+        <Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+            <Card sx={{display: 'flex', flexDirection: 'row', padding: '2rem'}}>
+                <CardContent sx={{flex: '1 0 auto', padding: 'unset'}}>
                     <Typography sx={{fontSize: 10}} color="text.secondary" textAlign="left" gutterBottom>
                         Id: {jobPosting.id}
                     </Typography>
@@ -33,7 +33,7 @@ export default function JobPostingDetails() {
                         <Button size="small" variant="contained" sx={{mb:'0.2rem'}}>delete</Button>
                     </Box>
                 </CardContent>
-            </Box>
-        </Card>
+            </Card>
+        </Box>
     )
 }
