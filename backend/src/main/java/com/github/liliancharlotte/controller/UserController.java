@@ -24,6 +24,12 @@ class UserController {
         return userService.findById(id);
     }
 
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable String id, @RequestBody UserRequest userRequest) {
+        User updatedUser = new User(id, userRequest.name(), userRequest.jobPostings());
+        return userService.updateUser(id, updatedUser);
+    }
+
     @PostMapping()
     public User addUser(@RequestBody UserRequest userRequest) {
         return userService.addUser(userRequest);

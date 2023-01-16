@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {User} from "../model/User";
-import {getUserById} from "../apiCalls";
+import {getUserById, updateUser} from "../apiCalls";
+import {ColumnStatus} from "../model/JobPosting";
 
 export default function useUser(id: string) {
 
@@ -18,5 +19,23 @@ export default function useUser(id: string) {
             .catch(console.error)
     }
 
-    return {user};
+    function updateJobPostingStatus(jobPostingId: string, laneToMoveTo: ColumnStatus) {
+        if (!user) {
+            console.warn("User is undefined.");
+            return;
+        }
+
+        const jobPostings = user.jobPostings;
+        const jobPostingIndex = jobPostings.findIndex(jobPosting => jobPosting.id === jobPostingId);
+        jobPostings[jobPostingIndex].status = laneToMoveTo
+
+        const updatedUser: User = {...user, jobPostings};
+        setUser(updatedUser);
+
+        updateUser(user.id, updatedUser)
+            .then(user => setUser(user))
+            .catch(console.error);
+    }
+
+    return {user, updateJobPostingStatus};
 }

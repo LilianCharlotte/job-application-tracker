@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 
 export type JobPostingCardProps = {
     jobPosting: JobPosting
+
 }
 
 export default function JobPostingCard(props: JobPostingCardProps) {
