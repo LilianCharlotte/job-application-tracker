@@ -1,10 +1,47 @@
-import {useLocation} from "react-router-dom";
-import {Box, Button, Card, CardContent, Link, Typography} from "@mui/material";
+import {useLocation, useNavigate} from "react-router-dom";
+import {Box, Button, Card, CardContent, Link, Popover, Typography} from "@mui/material";
+import {MouseEvent, useState} from "react";
+import {ColumnStatus} from "../model/JobPosting";
 
+type JobPostingDetailsProps = {
+    handleMoveJobPosting(id: string, laneToMoveTo: ColumnStatus): void
+}
 
-export default function JobPostingDetails() {
+export default function JobPostingDetails(props: JobPostingDetailsProps) {
+    const navigate = useNavigate();
     const {state} = useLocation();
     const {jobPosting} = state;
+
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+    const handleOpenPopover = (event: MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+    function stringToColumnStatus(laneToMoveTo: string): ColumnStatus {
+        if (laneToMoveTo === "'Interested in'") {
+            return "INTERESTED_IN";
+        } else if (laneToMoveTo === "'Currently working on'") {
+            return "CURRENTLY_WORKING_ON";
+        } else {
+            throw new Error("Invalid")
+        }
+    }
+
+    const laneToMoveTo = jobPosting.status === "INTERESTED_IN" ? "'Currently working on'" : "'Interested in'";
+
+    function handleMove(event: MouseEvent<HTMLDivElement>) {
+        event.preventDefault()
+        props.handleMoveJobPosting(jobPosting.id, stringToColumnStatus(laneToMoveTo));
+        navigate("/");
+    }
 
 
     return (
@@ -14,7 +51,7 @@ export default function JobPostingDetails() {
                     <Typography sx={{fontSize: 10}} color="text.secondary" textAlign="left" gutterBottom>
                         Id: {jobPosting.id}
                     </Typography>
-                    <Box component="div" sx={{maxWidth:'500px'}}>
+                    <Box component="div" sx={{maxWidth: '500px'}}>
                         Company name: {jobPosting.companyName} <br/>
                         {jobPosting.isUnsolicited ? "Write an unsolicited application." : "Job title: " + jobPosting.jobTitle}
                         <br/>
@@ -26,11 +63,31 @@ export default function JobPostingDetails() {
                     </Box>
                 </CardContent>
                 <Box/>
-                <CardContent sx={{width:51}}>
+                <CardContent sx={{width: 51}}>
                     <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                        <Button size="small" variant="contained" sx={{mb:'0.2rem'}}>edit</Button>
-                        <Button size="small" variant="contained" sx={{mb:'0.2rem'}}>move</Button>
-                        <Button size="small" variant="contained" sx={{mb:'0.2rem'}}>delete</Button>
+                        <Button size="small" variant="contained" sx={{mb: '0.2rem'}}
+                                onClick={handleOpenPopover}>move</Button>
+                        <Popover
+                            id={id}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClick={handleMove}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'center',
+                                horizontal: 'right'
+                            }}
+                            transformOrigin={{
+                                vertical: 'center',
+                                horizontal: 'left'
+                            }}
+                        >
+                            <Typography
+                                sx={{p: 1}}>move
+                                to {laneToMoveTo} </Typography>
+                        </Popover>
+                        <Button size="small" variant="contained" sx={{mb: '0.2rem'}}>edit</Button>
+                        <Button size="small" variant="contained" sx={{mb: '0.2rem'}}>delete</Button>
                     </Box>
                 </CardContent>
             </Card>

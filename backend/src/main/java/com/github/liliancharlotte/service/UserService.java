@@ -5,6 +5,7 @@ import com.github.liliancharlotte.model.UserRequest;
 import com.github.liliancharlotte.repository.UserRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -32,4 +33,10 @@ public class UserService {
         return userRepo.findById(id);
     }
 
+    public User updateUser(String id, User user) throws NoSuchElementException {
+        if (!userRepo.existsById(id)) {
+            throw new NoSuchElementException("User not found");
+        }
+        return userRepo.save(user);
+    }
 }
