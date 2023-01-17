@@ -4,7 +4,8 @@ import {MouseEvent, useState} from "react";
 import {ColumnStatus} from "../model/JobPosting";
 
 type JobPostingDetailsProps = {
-    handleMoveJobPosting(id: string, laneToMoveTo: ColumnStatus): void
+    handleMoveJobPosting(idJobPosting: string, laneToMoveTo: ColumnStatus): void
+    handleDeleteJobPosting(idJobPosting: string): void;
 }
 
 export default function JobPostingDetails(props: JobPostingDetailsProps) {
@@ -43,6 +44,12 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
         navigate("/");
     }
 
+
+    function handleDelete(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault()
+        props.handleDeleteJobPosting(jobPosting.id);
+        navigate("/");
+    }
 
     return (
         <Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
@@ -87,7 +94,8 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
                                 to {laneToMoveTo} </Typography>
                         </Popover>
                         <Button size="small" variant="contained" sx={{mb: '0.2rem'}}>edit</Button>
-                        <Button size="small" variant="contained" sx={{mb: '0.2rem'}}>delete</Button>
+                        <Button size="small" variant="contained" sx={{mb: '0.2rem'}}
+                                onClick={handleDelete}>delete</Button>
                     </Box>
                 </CardContent>
             </Card>
