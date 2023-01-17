@@ -7,10 +7,14 @@ import {ColumnStatus} from "../model/JobPosting";
 
 export default function UserApp() {
 
-    const {user, updateJobPostingStatus} = useUser("1");
+    const {user, updateJobPostingStatus, deleteJobPosting} = useUser("1");
 
     function handleMoveJobPosting(jobPostingId: string, laneToMoveTo: ColumnStatus) {
         updateJobPostingStatus(jobPostingId, laneToMoveTo);
+    }
+
+    function handleDeleteJobPosting(jobPostingId: string) {
+        deleteJobPosting(jobPostingId);
     }
 
     return <Grid
@@ -29,7 +33,8 @@ export default function UserApp() {
                         <JobPostingGallery user={user}/>
                         :
                         <p>User is undefined.</p>}/>
-                    <Route path="/details" element={<JobPostingDetails handleMoveJobPosting={handleMoveJobPosting}/>}/>
+                    <Route path="/details" element={<JobPostingDetails handleMoveJobPosting={handleMoveJobPosting}
+                                                                       handleDeleteJobPosting={handleDeleteJobPosting}/>}/>
                 </Routes>
             </BrowserRouter>
         </Container>

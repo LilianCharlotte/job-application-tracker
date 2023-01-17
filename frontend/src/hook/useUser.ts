@@ -37,5 +37,21 @@ export default function useUser(id: string) {
             .catch(console.error);
     }
 
-    return {user, updateJobPostingStatus};
+    function deleteJobPosting(jobPostingId: string) {
+        if (!user) {
+            console.warn("User is undefined.");
+            return;
+        }
+
+        const jobPostings = user.jobPostings.filter(jobPosting => jobPosting.id !== jobPostingId);
+        const updatedUser: User = {...user, jobPostings};
+
+        setUser(updatedUser);
+
+        updateUser(user.id, updatedUser)
+            .then(user => setUser(user))
+            .catch(console.error);
+    }
+
+    return {user, updateJobPostingStatus, deleteJobPosting};
 }
