@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {User} from "../model/User";
-import {getUserById, updateUser} from "../apiCalls";
-import {ColumnStatus} from "../model/JobPosting";
+import {addJobPostingToUser, getUserById, updateUser} from "../apiCalls";
+import {ColumnStatus, JobPostingRequest} from "../model/JobPosting";
 
 export default function useUser(id: string) {
 
@@ -53,5 +53,15 @@ export default function useUser(id: string) {
             .catch(console.error);
     }
 
-    return {user, updateJobPostingStatus, deleteJobPosting};
+    function addJobPosting(jobPostingRequest: JobPostingRequest) {
+        if (!user) {
+            console.warn("User is undefined.");
+            return;
+        }
+        addJobPostingToUser(user.id, jobPostingRequest)
+            .then(user => setUser(user))
+            .catch(console.error);
+    }
+
+    return {user, updateJobPostingStatus, deleteJobPosting, addJobPosting};
 }
