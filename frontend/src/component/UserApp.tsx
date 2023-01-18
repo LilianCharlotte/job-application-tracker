@@ -9,7 +9,7 @@ import Navbar from "./Navbar";
 
 export default function UserApp() {
 
-    const {user, updateJobPostingStatus, deleteJobPosting} = useUser("1");
+    const {user, addJobPosting, updateJobPostingStatus, deleteJobPosting} = useUser("1");
 
 
     function handleMoveJobPosting(jobPostingId: string, laneToMoveTo: ColumnStatus) {
@@ -42,7 +42,8 @@ export default function UserApp() {
                     <Route path="/details" element={<JobPostingDetails handleMoveJobPosting={handleMoveJobPosting}
                                                                        handleDeleteJobPosting={handleDeleteJobPosting}/>}/>
                     <Route path="/addJobPosting"
-                           element={user ? <AddJobPosting user={user}/> : <p>User is undefined.</p>}/>
+                           element={user ? <AddJobPosting user={user} addJobPosting={addJobPosting}/> :
+                               <p>User is undefined.</p>}/>
                 </Routes>
             </Container>
         </Grid>
