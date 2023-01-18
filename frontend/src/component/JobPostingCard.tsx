@@ -22,19 +22,20 @@ export default function JobPostingCard(props: JobPostingCardProps) {
     }
 
     return (
-        <Typography textAlign={"center"}>
+        <Typography component={"div"} textAlign={"center"}>
             <Card sx={{m: '0.5rem', maxWidth: 245, transform: 'scale(0.9)'}} variant="outlined">
                 <CardContentLessPadding>
-                    <Typography sx={{fontSize: 10}} color="text.secondary" textAlign="left" gutterBottom>
+                    <Typography component={"div"} sx={{fontSize: 10}} color="text.secondary" textAlign="left"
+                                gutterBottom>
                         JobPosting
                     </Typography>
-                    <Typography sx={{fontSize: 18}} variant="h5" component="div">
+                    <Typography component={"div"} sx={{fontSize: 18}} variant="h5">
                         {props.jobPosting.companyName}
                     </Typography>
-                    <Typography sx={{mb: 1.5, fontSize: 13}} color="text.secondary">
+                    <Typography component={"div"} sx={{mb: 1.5, fontSize: 13}} color="text.secondary">
                         {!props.jobPosting.isUnsolicited ? props.jobPosting.jobTitle : "write an unsolicited application"}
                     </Typography>
-                    <Typography sx={{fontSize: 11, wordWrap: "break-word"}} variant="body2">
+                    <Typography component={"div"} sx={{fontSize: 11, wordWrap: "break-word"}} variant="body2">
                         <Box sx={{maxWidth: 185}}>
                             <Link href={props.jobPosting.jobPostingLink}
                                   underline="hover" color="secondary">{props.jobPosting.jobPostingLink}</Link>

@@ -55,7 +55,8 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
         <Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
             <Card sx={{display: 'flex', flexDirection: 'row', padding: '2rem'}}>
                 <CardContent sx={{flex: '1 0 auto', padding: 'unset'}}>
-                    <Typography sx={{fontSize: 10}} color="text.secondary" textAlign="left" gutterBottom>
+                    <Typography component={"span"} sx={{fontSize: 10}} color="text.secondary" textAlign="left"
+                                gutterBottom>
                         Id: {jobPosting.id}
                     </Typography>
                     <Box component="div" sx={{maxWidth: '500px'}}>
