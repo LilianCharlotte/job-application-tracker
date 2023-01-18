@@ -1,5 +1,6 @@
 package com.github.liliancharlotte.controller;
 
+import com.github.liliancharlotte.model.JobPostingRequest;
 import com.github.liliancharlotte.model.User;
 import com.github.liliancharlotte.model.UserRequest;
 import com.github.liliancharlotte.service.UserService;
@@ -33,5 +34,10 @@ class UserController {
     @PostMapping()
     public User addUser(@RequestBody UserRequest userRequest) {
         return userService.addUser(userRequest);
+    }
+
+    @PutMapping("/{id}/jobPosting")
+    public User addJobPostingToUser(@PathVariable String id, @RequestBody JobPostingRequest jobPostingRequest) {
+        return userService.addJobPostingToUser(id, jobPostingRequest);
     }
 }
