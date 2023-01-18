@@ -4,7 +4,7 @@ import {createTheme, GlobalStyles, ThemeProvider} from "@mui/material";
 import {themeOptions} from "./mui-theme";
 
 
-const theme = createTheme(themeOptions)
+export const theme = createTheme(themeOptions)
 
 
 function App() {
