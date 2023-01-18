@@ -26,15 +26,23 @@ export type AddJobPostingProps = {
 
 export default function AddJobPosting(props: AddJobPostingProps) {
     const navigate = useNavigate();
-    const [newJobPostingRequest, setNewJobPostingRequest] = useState({} as JobPostingRequest);
-    const [isApplicationUnsolicited, setIsApplicationUnsolicited] = useState(false);
+    const [newJobPostingRequest, setNewJobPostingRequest] = useState<JobPostingRequest>({
+        jobTitle: "",
+        companyName: "",
+        jobPostingLink: "",
+        jobDescription: "",
+        locatedAt: "",
+        remote: "IN_OFFICE",
+        status: "INTERESTED_IN",
+        isUnsolicited: false,
+    });
     const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-    const checkIfUnsolicited = () => {
-        setIsApplicationUnsolicited(!isApplicationUnsolicited);
+    const checkIfUnsolicited = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
         setNewJobPostingRequest(jobPostingRequest => ({
             ...jobPostingRequest,
-            isUnsolicited: isApplicationUnsolicited
+            isUnsolicited: !jobPostingRequest.isUnsolicited
         }))
     }
 
@@ -80,7 +88,6 @@ export default function AddJobPosting(props: AddJobPostingProps) {
 
     function onSaveJobPosting(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
-        console.log("Adding job posting", newJobPostingRequest);
         props.addJobPosting(newJobPostingRequest);
         navigate("/");
 
@@ -145,9 +152,9 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                           sx={{'& .MuiSvgIcon-root': {fontSize: 28}}}
                                           color="secondary"
                                           onClick={checkIfUnsolicited}
-                                          checked={isApplicationUnsolicited}/>
+                                          checked={newJobPostingRequest.isUnsolicited}/>
                             </Grid>
-                            {!isApplicationUnsolicited ? (<>
+                            {!newJobPostingRequest.isUnsolicited ? (<>
                                 <Grid item xs={5}>
                                     <Typography component={"div"} sx={{fontSize: 18}}>
                                         Job title: </Typography>
