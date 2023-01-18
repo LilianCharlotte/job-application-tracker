@@ -36,7 +36,7 @@ public class UserService {
         User user = userOpt.get();
 
         String generateJobPostingId = idService.generateId();
-        JobPosting jobPostingToAdd = new JobPosting(generateJobPostingId, jobPostingRequest.companyName(), jobPostingRequest.isUnsolicited(), jobPostingRequest.jobTitle(), jobPostingRequest.jobDescription(), jobPostingRequest.jobPostingLink(), jobPostingRequest.isRemote(), jobPostingRequest.locatedAt(), ColumnStatus.INTERESTED_IN);
+        JobPosting jobPostingToAdd = new JobPosting(generateJobPostingId, jobPostingRequest.companyName(), jobPostingRequest.isUnsolicited(), jobPostingRequest.jobTitle(), jobPostingRequest.jobDescription(), jobPostingRequest.jobPostingLink(), jobPostingRequest.remote(), jobPostingRequest.locatedAt(), ColumnStatus.INTERESTED_IN);
         user.jobPostings().add(jobPostingToAdd);
         return userRepo.save(user);
     }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.liliancharlotte.model.ColumnStatus;
 import com.github.liliancharlotte.model.JobPosting;
 import com.github.liliancharlotte.model.User;
+import com.github.liliancharlotte.model.WorkModel;
 import com.github.liliancharlotte.repository.UserRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ class UserControllerTest {
 
         User actualUser = objectMapper.readValue(response, User.class);
         assertEquals("test", actualUser.name());
-        JobPosting expectedJobPosting = new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", false, "Berlin", ColumnStatus.INTERESTED_IN);
+        JobPosting expectedJobPosting = new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN);
         assertEquals(expectedJobPosting, actualUser.jobPostings().get(0));
     }
 
@@ -91,7 +92,7 @@ class UserControllerTest {
     @Test
     @DirtiesContext
     void updateUserAndExpectUpdatedUserWithSameId() throws Exception {
-        JobPosting jobPosting = new JobPosting("903", "testCompanyName", true, "", "", "", false, "Hamburg", ColumnStatus.INTERESTED_IN);
+        JobPosting jobPosting = new JobPosting("903", "testCompanyName", true, "", "", "", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN);
         List<JobPosting> jobPostings = new ArrayList<>();
         jobPostings.add(jobPosting);
 
@@ -113,7 +114,7 @@ class UserControllerTest {
                                                          "jobTitle": "",
                                                          "jobDescription": "",
                                                          "jobPostingLink": "testCompany.com",
-                                                         "isRemote": false,
+                                                         "isRemote": "IN_OFFICE",
                                                          "locatedAt": "Berlin",
                                                          "status": "INTERESTED_IN"
                                                                 }
@@ -128,7 +129,7 @@ class UserControllerTest {
 
         User updatedUser = objectMapper.readValue(response, User.class);
         List<JobPosting> expectedJobPostings = new ArrayList<>();
-        expectedJobPostings.add(new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", false, "Berlin", ColumnStatus.INTERESTED_IN));
+        expectedJobPostings.add(new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN));
         User expectedUser = new User("13", "test", expectedJobPostings);
 
         assertNotEquals(user, updatedUser);
