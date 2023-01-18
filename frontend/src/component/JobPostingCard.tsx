@@ -41,7 +41,7 @@ export default function JobPostingCard(props: JobPostingCardProps) {
                                   underline="hover" color="secondary">{props.jobPosting.jobPostingLink}</Link>
                             <br/>
                             located in: {props.jobPosting.locatedAt}<br/>
-                            working remotely: {props.jobPosting.isRemote ? "yes" : "no"}
+                            working remotely: {props.jobPosting.remote === "IN_OFFICE" ? "yes" : "no"}
                         </Box>
                     </Typography>
                     <CardActions>

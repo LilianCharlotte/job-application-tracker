@@ -15,18 +15,75 @@ import {
     Typography
 } from "@mui/material";
 import {theme} from "../App";
-import {useState} from "react";
+import {ChangeEvent, MouseEvent, useState} from "react";
+import {JobPostingRequest, WorkModel} from "../model/JobPosting";
+import {useNavigate} from "react-router-dom";
 
 export type AddJobPostingProps = {
-    user: User
+    user: User,
+    addJobPosting: (jobPostingRequest: JobPostingRequest) => void,
 }
 
 export default function AddJobPosting(props: AddJobPostingProps) {
+    const navigate = useNavigate();
+    const [newJobPostingRequest, setNewJobPostingRequest] = useState({} as JobPostingRequest);
     const [isApplicationUnsolicited, setIsApplicationUnsolicited] = useState(false);
     const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
     const checkIfUnsolicited = () => {
         setIsApplicationUnsolicited(!isApplicationUnsolicited);
+        setNewJobPostingRequest(jobPostingRequest => ({
+            ...jobPostingRequest,
+            isUnsolicited: isApplicationUnsolicited
+        }))
+    }
+
+    const handleChangeJobPostingCompanyName = (event: ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault()
+        setNewJobPostingRequest(jobPostingRequest => ({
+            ...jobPostingRequest,
+            companyName: event.target.value
+        }))
+    }
+
+    function handleChangeJobPostingLocation(event: ChangeEvent<HTMLInputElement>) {
+        event.preventDefault()
+        setNewJobPostingRequest(jobPostingRequest => ({
+            ...jobPostingRequest,
+            locatedAt: event.target.value
+        }))
+    }
+
+    const handleChangeJobPostingDescription = (event: ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault()
+        setNewJobPostingRequest(jobPostingRequest => ({
+            ...jobPostingRequest,
+            jobDescription: event.target.value
+        }))
+    }
+
+    function handleChangeJobPostingLink(event: ChangeEvent<HTMLInputElement>) {
+        event.preventDefault()
+        setNewJobPostingRequest(jobPostingRequest => ({
+            ...jobPostingRequest,
+            jobPostingLink: event.target.value
+        }))
+    }
+
+    function handleChangeRemote(event: ChangeEvent<HTMLInputElement>) {
+        event.preventDefault()
+        setNewJobPostingRequest(jobPostingRequest => ({
+            ...jobPostingRequest,
+            remote: event.target.value as WorkModel
+        }))
+    }
+
+    function onSaveJobPosting(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        console.log("Adding job posting", newJobPostingRequest);
+        props.addJobPosting(newJobPostingRequest);
+        navigate("/");
+
     }
 
     return (<div>
@@ -57,6 +114,8 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                            variant="outlined"
                                            size="small"
                                            label="Company name"
+                                           value={newJobPostingRequest.companyName}
+                                           onChange={handleChangeJobPostingCompanyName}
                                 />
                             </Grid>
 
@@ -71,6 +130,8 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                            variant="outlined"
                                            size="small"
                                            label={"City or region"}
+                                           value={newJobPostingRequest.locatedAt}
+                                           onChange={handleChangeJobPostingLocation}
                                 />
                             </Grid>
 
@@ -110,7 +171,9 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                                variant="outlined"
                                                size="small"
                                                multiline
-                                               rows={4}/>
+                                               rows={4}
+                                               value={newJobPostingRequest.jobDescription}
+                                               onChange={handleChangeJobPostingDescription}/>
                                 </Grid>
                                 <Grid item xs={5}>
                                     <Typography component={"div"} sx={{fontSize: 18}}>
@@ -121,7 +184,9 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                                label="Link"
                                                style={{width: '95%'}}
                                                variant="outlined"
-                                               size="small"/>
+                                               size="small"
+                                               value={newJobPostingRequest.jobPostingLink}
+                                               onChange={handleChangeJobPostingLink}/>
                                 </Grid>
                                 <Grid item xs={5}>
                                     <Typography component={"div"} sx={{fontSize: 18}}>
@@ -133,11 +198,13 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                         <RadioGroup
                                             defaultValue="Office only"
                                             name="radio-buttons-group"
+                                            value={newJobPostingRequest.remote}
+                                            onChange={handleChangeRemote}
                                         >
-                                            <FormControlLabel value="Office only" control={<Radio/>}
+                                            <FormControlLabel value="IN_OFFICE" control={<Radio/>}
                                                               label="Office only"/>
-                                            <FormControlLabel value="Remote" control={<Radio/>} label="Remote"/>
-                                            <FormControlLabel value="Hybrid" control={<Radio/>} label="Hybrid"/>
+                                            <FormControlLabel value="REMOTE" control={<Radio/>} label="Remote"/>
+                                            <FormControlLabel value="HYBRID" control={<Radio/>} label="Hybrid"/>
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
@@ -151,14 +218,17 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                                label="Link"
                                                style={{width: '95%'}}
                                                variant="outlined"
-                                               size="small"/>
+                                               size="small"
+                                               value={newJobPostingRequest.jobPostingLink}
+                                               onChange={handleChangeJobPostingLink}/>
                                 </Grid>
                             </>}
                         </Grid>
                     </Box>
                     <Box sx={{display: 'flex', justifyContent: 'right', mr: '2rem', mt: '1.5rem'}}>
                         <Button variant="contained" sx={{m: '0.2rem'}}>Discard changes</Button>
-                        <Button variant="contained" sx={{m: '0.2rem'}}>Save job posting</Button>
+                        <Button variant="contained" sx={{m: '0.2rem'}} onClick={onSaveJobPosting}>
+                            Save job posting</Button>
                     </Box>
                 </CardContent>
             </Card>
