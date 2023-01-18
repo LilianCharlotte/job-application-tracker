@@ -6,7 +6,7 @@ public record JobPostingRequest(
         String jobTitle,
         String jobDescription,
         String jobPostingLink,
-        boolean isRemote,
+        WorkModel remote,
         String locatedAt,
         ColumnStatus status) {
 }

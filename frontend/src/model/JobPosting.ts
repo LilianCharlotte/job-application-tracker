@@ -1,4 +1,5 @@
 export type ColumnStatus = "INTERESTED_IN" | "CURRENTLY_WORKING_ON"
+export type WorkModel = "IN_OFFICE" | "REMOTE" | "HYBRID"
 
 export type JobPosting = {
     id: string,
@@ -7,7 +8,7 @@ export type JobPosting = {
     jobTitle: string,
     jobDescription: string,
     jobPostingLink: string,
-    isRemote: boolean,
+    remote: WorkModel,
     locatedAt: string,
     status: ColumnStatus
 }
@@ -18,7 +19,7 @@ export type JobPostingRequest = {
     jobTitle: string,
     jobDescription: string,
     jobPostingLink: string,
-    isRemote: boolean,
+    remote: WorkModel,
     locatedAt: string,
     status: ColumnStatus
 }
