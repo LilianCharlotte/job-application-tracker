@@ -4,6 +4,7 @@ import com.github.liliancharlotte.model.*;
 import com.github.liliancharlotte.repository.UserRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -29,16 +30,38 @@ public class UserService {
     }
 
     public User addJobPostingToUser(String userId, JobPostingRequest jobPostingRequest) throws NoSuchElementException {
-        Optional<User> userOpt = userRepo.findById(userId);
-        if (userOpt.isEmpty()) {
-            throw new NoSuchElementException("User %s not found".formatted(userId));
-        }
-        User user = userOpt.get();
+        User user = getUser(userId);
 
         String generateJobPostingId = idService.generateId();
         JobPosting jobPostingToAdd = new JobPosting(generateJobPostingId, jobPostingRequest.companyName(), jobPostingRequest.isUnsolicited(), jobPostingRequest.jobTitle(), jobPostingRequest.jobDescription(), jobPostingRequest.jobPostingLink(), jobPostingRequest.remote(), jobPostingRequest.locatedAt(), ColumnStatus.INTERESTED_IN);
         user.jobPostings().add(jobPostingToAdd);
         return userRepo.save(user);
+    }
+
+    private User getUser(String userId) {
+        Optional<User> userOpt = userRepo.findById(userId);
+        if (userOpt.isEmpty()) {
+            throw new NoSuchElementException("User %s not found".formatted(userId));
+        }
+        return userOpt.get();
+    }
+
+    public User editJobPostingInUser(String userId, String jobPostingId, JobPostingRequest jobPostingRequest) {
+        User user = getUser(userId);
+        int index = findJobPostingIndex(user.jobPostings(), jobPostingId).orElseThrow();
+        JobPosting editedJobPosting = new JobPosting(jobPostingId, jobPostingRequest.companyName(), jobPostingRequest.isUnsolicited(), jobPostingRequest.jobTitle(), jobPostingRequest.jobDescription(), jobPostingRequest.jobPostingLink(), jobPostingRequest.remote(), jobPostingRequest.locatedAt(), jobPostingRequest.status());
+        user.jobPostings().set(index, editedJobPosting);
+        return userRepo.save(user);
+    }
+
+    private static Optional<Integer> findJobPostingIndex(List<JobPosting> jobPostings, String jobPostingId) {
+        for (int i = 0; i < jobPostings.size(); i++) {
+            JobPosting jobPosting = jobPostings.get(i);
+            if (jobPosting.id().equals(jobPostingId)) {
+                return Optional.of(i);
+            }
+        }
+        return Optional.empty();
     }
 
     public Optional<User> findById(String id) {

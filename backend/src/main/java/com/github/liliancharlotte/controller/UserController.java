@@ -40,4 +40,9 @@ class UserController {
     public User addJobPostingToUser(@PathVariable String id, @RequestBody JobPostingRequest jobPostingRequest) {
         return userService.addJobPostingToUser(id, jobPostingRequest);
     }
+
+    @PutMapping("/{id}/jobPosting/{jobPostingId}")
+    public User editJobPosting(@PathVariable String id, @PathVariable String jobPostingId, @RequestBody JobPostingRequest jobPostingRequest) {
+        return userService.editJobPostingInUser(id, jobPostingId, jobPostingRequest);
+    }
 }
