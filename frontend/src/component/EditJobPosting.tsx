@@ -12,12 +12,11 @@ export default function EditJobPosting(props: EditJobPostingProps) {
     return (<Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
         <Card sx={{display: 'flex', flexDirection: 'row', padding: '2rem'}}>
             <CardContent sx={{flex: '1 0 auto', padding: 'unset'}}>
-                <Grid container spacing={2}>
-
+                <Grid container spacing={2} style={{width: '450px'}}>
                     <Box
                         component="form"
                         sx={{
-                            '& .MuiTextField-root': {m: 1, width: '25ch'},
+                            '& .MuiTextField-root': {m: 1, width: '43ch'},
                         }}
                         noValidate
                         autoComplete="off"
