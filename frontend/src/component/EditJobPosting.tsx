@@ -55,6 +55,8 @@ export default function EditJobPosting(props: EditJobPostingProps) {
                                     label={"Job description"}
                                     defaultValue={jobPosting.jobDescription}
                                     value={jobPosting.jobDescription}
+                                    multiline
+                                    rows={3}
                                 /> </Grid>
 
                         </div>
