@@ -21,7 +21,7 @@ import {useNavigate} from "react-router-dom";
 
 export type AddJobPostingProps = {
     user: User,
-    addJobPosting: (jobPostingRequest: JobPostingRequest) => void,
+    handleAddJobPosting: (jobPostingRequest: JobPostingRequest) => void,
 }
 
 export default function AddJobPosting(props: AddJobPostingProps) {
@@ -88,7 +88,7 @@ export default function AddJobPosting(props: AddJobPostingProps) {
 
     function onSaveJobPosting(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
-        props.addJobPosting(newJobPostingRequest);
+        props.handleAddJobPosting(newJobPostingRequest);
         navigate("/");
 
     }

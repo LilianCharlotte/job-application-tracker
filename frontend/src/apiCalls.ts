@@ -16,3 +16,8 @@ export function addJobPostingToUser(userId: string, jobPostingRequest: JobPostin
     return axios.put(`/api/user/${userId}/jobPosting`, jobPostingRequest)
         .then(response => response.data)
 }
+
+export function editJobPosting(userId: string, jobPostingId: string, jobPostingRequest: JobPostingRequest) {
+    return axios.put(`/api/user/${userId}/jobPosting/${jobPostingId}`, jobPostingRequest)
+        .then(response => response.data)
+}

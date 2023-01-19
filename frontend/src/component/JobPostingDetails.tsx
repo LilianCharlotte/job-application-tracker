@@ -51,6 +51,11 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
         navigate("/");
     }
 
+    function handleEditJobPosting(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault()
+        navigate('/editJobPosting', {state: {jobPosting: jobPosting}});
+    }
+
     return (
         <Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
             <Card sx={{display: 'flex', flexDirection: 'row', padding: '2rem'}}>
@@ -94,7 +99,8 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
                                 sx={{p: 1}}>move
                                 to {laneToMoveTo} </Typography>
                         </Popover>
-                        <Button size="small" variant="contained" sx={{mb: '0.2rem'}}>edit</Button>
+                        <Button size="small" variant="contained" sx={{mb: '0.2rem'}}
+                                onClick={handleEditJobPosting}>edit</Button>
                         <Button size="small" variant="contained" sx={{mb: '0.2rem'}}
                                 onClick={handleDelete}>delete</Button>
                     </Box>
