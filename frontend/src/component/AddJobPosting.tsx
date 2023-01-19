@@ -34,7 +34,7 @@ export default function AddJobPosting(props: AddJobPostingProps) {
         locatedAt: "",
         remote: "IN_OFFICE",
         status: "INTERESTED_IN",
-        isUnsolicited: false,
+        isUnsolicited: false
     });
     const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
@@ -100,7 +100,7 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                     <Box
                         component="form"
                         sx={{
-                            '& > :not(style)': {m: 1, width: '25ch'},
+                            '& > :not(style)': {m: 1, width: '25ch'}
                         }}
                         noValidate
                         autoComplete="off"
