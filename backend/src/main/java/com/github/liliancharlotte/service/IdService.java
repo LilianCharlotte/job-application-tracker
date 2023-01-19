@@ -8,7 +8,6 @@ import java.util.UUID;
 public class IdService {
 
     String generateId() {
-
         return UUID.randomUUID().toString();
     }
 }
