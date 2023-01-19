@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {User} from "../model/User";
-import {addJobPostingToUser, getUserById, updateUser} from "../apiCalls";
+import {addJobPostingToUser, editJobPosting, getUserById, updateUser} from "../apiCalls";
 import {ColumnStatus, JobPostingRequest} from "../model/JobPosting";
 
 export default function useUser(id: string) {
@@ -17,6 +17,17 @@ export default function useUser(id: string) {
         getUserById(id)
             .then(data => setUser(data))
             .catch(console.error)
+    }
+
+    function editJobPostingInUser(jobPostingId: string, jobPostingRequest: JobPostingRequest) {
+        if (!user) {
+            console.warn("User is undefined.");
+            return;
+        }
+
+        editJobPosting(user.id, jobPostingId, jobPostingRequest)
+            .then(user => setUser(user))
+            .catch(console.error);
     }
 
     function updateJobPostingStatus(jobPostingId: string, laneToMoveTo: ColumnStatus) {
@@ -63,5 +74,5 @@ export default function useUser(id: string) {
             .catch(console.error);
     }
 
-    return {user, updateJobPostingStatus, deleteJobPosting, addJobPosting};
+    return {user, updateJobPostingStatus, deleteJobPosting, addJobPosting, editJobPostingInUser};
 }

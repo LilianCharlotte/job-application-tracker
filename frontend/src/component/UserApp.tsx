@@ -3,13 +3,14 @@ import JobPostingGallery from "./JobPostingGallery";
 import {Container, Grid} from "@mui/material";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import JobPostingDetails from "./JobPostingDetails";
-import {ColumnStatus} from "../model/JobPosting";
+import {ColumnStatus, JobPostingRequest} from "../model/JobPosting";
 import AddJobPosting from "./AddJobPosting";
 import Navbar from "./Navbar";
+import EditJobPosting from "./EditJobPosting";
 
 export default function UserApp() {
 
-    const {user, addJobPosting, updateJobPostingStatus, deleteJobPosting} = useUser("1");
+    const {user, addJobPosting, updateJobPostingStatus, deleteJobPosting, editJobPostingInUser} = useUser("1");
 
 
     function handleMoveJobPosting(jobPostingId: string, laneToMoveTo: ColumnStatus) {
@@ -18,6 +19,10 @@ export default function UserApp() {
 
     function handleDeleteJobPosting(jobPostingId: string) {
         deleteJobPosting(jobPostingId);
+    }
+
+    function handleEditJobPosting(jobPostingId: string, jobPostingRequest: JobPostingRequest) {
+        editJobPostingInUser(jobPostingId, jobPostingRequest);
     }
 
 
@@ -42,8 +47,10 @@ export default function UserApp() {
                     <Route path="/details" element={<JobPostingDetails handleMoveJobPosting={handleMoveJobPosting}
                                                                        handleDeleteJobPosting={handleDeleteJobPosting}/>}/>
                     <Route path="/addJobPosting"
-                           element={user ? <AddJobPosting user={user} addJobPosting={addJobPosting}/> :
+                           element={user ? <AddJobPosting user={user} handleAddJobPosting={addJobPosting}/> :
                                <p>User is undefined.</p>}/>
+                    <Route path="/editJobPosting"
+                           element={<EditJobPosting handleEditJobPosting={handleEditJobPosting}/>}/>
                 </Routes>
             </Container>
         </Grid>
