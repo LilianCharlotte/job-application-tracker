@@ -117,7 +117,7 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                             Add a job posting
                         </Typography>
                         <br/>
-                        <Grid container spacing={2} style={{width: '600px'}}>
+                        <Grid container spacing={2} style={{width: '700px'}}>
                             <Grid item xs={5}>
                                 <Typography component={"div"} sx={{fontSize: 18}}>
                                     Company name:

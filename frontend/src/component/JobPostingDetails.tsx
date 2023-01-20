@@ -60,19 +60,23 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
         <Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
             <Card sx={{display: 'flex', flexDirection: 'row', padding: '2rem'}}>
                 <CardContent sx={{flex: '1 0 auto', padding: 'unset'}}>
-                    <Typography component={"span"} sx={{fontSize: 10}} color="text.secondary" textAlign="left"
+                    <Typography component={"span"} sx={{fontSize: 11}} color="text.secondary" textAlign="left"
                                 gutterBottom>
                         Id: {jobPosting.id}
                     </Typography>
                     <Box component="div" sx={{maxWidth: '500px'}}>
                         Company name: {jobPosting.companyName} <br/>
+
                         {jobPosting.isUnsolicited ? "Write an unsolicited application." : "Job title: " + jobPosting.jobTitle}
-                        <br/>
-                        Job description: {jobPosting.jobDescription} <br/>
+
+                        {!jobPosting.isUnsolicited && <><br/>{"Job description: " + jobPosting.jobDescription}</>} <br/>
                         Link: <Link href={jobPosting.jobPostingLink}
                                     underline="hover" color="secondary">{jobPosting.jobPostingLink}</Link> <br/>
                         Located in: {jobPosting.locatedAt} <br/>
-                        Working remotely: {jobPosting.remote === "REMOTE" ? "yes" : "no"} <br/>
+
+                        Working remotely: {jobPosting.remote === "REMOTE" && "yes"}
+                        {jobPosting.remote === "IN_OFFICE" && "In office only"}
+                        {jobPosting.remote === "HYBRID" && "hybrid"} <br/>
                     </Box>
                 </CardContent>
                 <Box/>
