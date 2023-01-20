@@ -72,7 +72,7 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
                         Link: <Link href={jobPosting.jobPostingLink}
                                     underline="hover" color="secondary">{jobPosting.jobPostingLink}</Link> <br/>
                         Located in: {jobPosting.locatedAt} <br/>
-                        Working remotely: {jobPosting.isRemote ? "yes" : "no"} <br/>
+                        Working remotely: {jobPosting.remote === "REMOTE" ? "yes" : "no"} <br/>
                     </Box>
                 </CardContent>
                 <Box/>
