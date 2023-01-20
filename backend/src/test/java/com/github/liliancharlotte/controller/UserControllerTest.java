@@ -54,7 +54,7 @@ class UserControllerTest {
                                                     "jobTitle": "",
                                                     "jobDescription": "",
                                                     "jobPostingLink": "testCompany.com",
-                                                    "isRemote": false,
+                                                    "remote": "IN_OFFICE",
                                                     "locatedAt": "Berlin",
                                                     "status": "INTERESTED_IN"
                                                 }
@@ -114,7 +114,7 @@ class UserControllerTest {
                                                          "jobTitle": "",
                                                          "jobDescription": "",
                                                          "jobPostingLink": "testCompany.com",
-                                                         "isRemote": "IN_OFFICE",
+                                                         "remote": "IN_OFFICE",
                                                          "locatedAt": "Berlin",
                                                          "status": "INTERESTED_IN"
                                                                 }
