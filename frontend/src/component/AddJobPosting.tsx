@@ -38,7 +38,7 @@ export default function AddJobPosting(props: AddJobPostingProps) {
     });
     const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-    const checkIfUnsolicited = (event: MouseEvent<HTMLButtonElement>) => {
+    function checkIfUnsolicited(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
         setNewJobPostingRequest(jobPostingRequest => ({
             ...jobPostingRequest,
@@ -46,7 +46,7 @@ export default function AddJobPosting(props: AddJobPostingProps) {
         }))
     }
 
-    const handleChangeJobPostingCompanyName = (event: ChangeEvent<HTMLInputElement>) => {
+    function handleChangeJobPostingCompanyName(event: ChangeEvent<HTMLInputElement>) {
         event.preventDefault()
         setNewJobPostingRequest(jobPostingRequest => ({
             ...jobPostingRequest,
@@ -62,7 +62,15 @@ export default function AddJobPosting(props: AddJobPostingProps) {
         }))
     }
 
-    const handleChangeJobPostingDescription = (event: ChangeEvent<HTMLInputElement>) => {
+    function handleChangeJobTitle(event: ChangeEvent<HTMLInputElement>) {
+        event.preventDefault()
+        setNewJobPostingRequest(jobPostingRequest => ({
+            ...jobPostingRequest,
+            jobTitle: event.target.value
+        }))
+    }
+
+    function handleChangeJobPostingDescription(event: ChangeEvent<HTMLInputElement>) {
         event.preventDefault()
         setNewJobPostingRequest(jobPostingRequest => ({
             ...jobPostingRequest,
@@ -164,7 +172,9 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                                style={{width: '95%'}}
                                                variant="outlined"
                                                size="small"
-                                               label={"Job title"}/>
+                                               label={"Job title"}
+                                               value={newJobPostingRequest.jobTitle}
+                                               onChange={handleChangeJobTitle}/>
                                 </Grid>
                                 <Grid item xs={5}>
                                     <Typography component={"div"} sx={{fontSize: 18}}>
@@ -203,7 +213,6 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                                     <FormControl>
                                         <FormLabel id="demo-radio-buttons-group-label">Working models</FormLabel>
                                         <RadioGroup
-                                            defaultValue="Office only"
                                             name="radio-buttons-group"
                                             value={newJobPostingRequest.remote}
                                             onChange={handleChangeRemote}
