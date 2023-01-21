@@ -33,23 +33,6 @@ export default function EditJobPosting(props: EditJobPostingProps) {
         }
     };
 
-
-    function onSaveEditedJobPosting(event: MouseEvent<HTMLButtonElement>) {
-        event.preventDefault();
-        const editedJobPostingRequest = {
-            companyName: editedJobPosting.companyName,
-            isUnsolicited: editedJobPosting.isUnsolicited,
-            jobTitle: editedJobPosting.jobTitle,
-            jobDescription: editedJobPosting.jobDescription,
-            jobPostingLink: editedJobPosting.jobPostingLink,
-            remote: editedJobPosting.remote,
-            locatedAt: editedJobPosting.locatedAt,
-            status: editedJobPosting.status
-        }
-        props.handleEditJobPosting(jobPosting.id, editedJobPostingRequest);
-        navigate("/");
-    }
-
     function handleChangeJobPostingCompanyName(event: ChangeEvent<HTMLInputElement>) {
         event.preventDefault()
         setEditedJobPosting(editedJobPosting => ({
@@ -105,6 +88,42 @@ export default function EditJobPosting(props: EditJobPostingProps) {
             isUnsolicited: !editedJobPosting.isUnsolicited
         }))
     }
+
+    function onSaveEditedJobPosting(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        const editedJobPostingRequest = {
+            companyName: editedJobPosting.companyName,
+            isUnsolicited: editedJobPosting.isUnsolicited,
+            jobTitle: editedJobPosting.jobTitle,
+            jobDescription: editedJobPosting.jobDescription,
+            jobPostingLink: editedJobPosting.jobPostingLink,
+            remote: editedJobPosting.remote,
+            locatedAt: editedJobPosting.locatedAt,
+            status: editedJobPosting.status
+        }
+        onSaveCheckIfJobPostingIsUnsolicited(editedJobPostingRequest);
+        props.handleEditJobPosting(jobPosting.id, editedJobPostingRequest);
+        navigate("/");
+    }
+
+    function onSaveCheckIfJobPostingIsUnsolicited(editedJobPostingRequest: JobPostingRequest) {
+        if (editedJobPosting.isUnsolicited) {
+            setEditedJobPosting(editedJobPosting => ({
+                ...editedJobPosting,
+                jobTitle: "", jobDescription: "", remote: "IN_OFFICE"
+            }))
+            editedJobPostingRequest.jobTitle = "";
+            editedJobPostingRequest.jobDescription = "";
+            editedJobPostingRequest.remote = "IN_OFFICE";
+        }
+    }
+
+    function onDiscardChanges(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        setEditedJobPosting(jobPosting);
+        navigate("/");
+    }
+
 
     return (<Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
         <Card sx={{display: 'flex', flexDirection: 'row', padding: '2rem'}}>
@@ -212,7 +231,8 @@ export default function EditJobPosting(props: EditJobPostingProps) {
                     </Box>
                 </Grid>
                 <Box sx={{display: 'flex', justifyContent: 'right', mr: '2rem', mt: '1.5rem'}}>
-                    <Button variant="contained" sx={{m: '0.2rem'}}>Discard changes</Button>
+                    <Button variant="contained" sx={{m: '0.2rem'}} onClick={onDiscardChanges}>
+                        Discard changes</Button>
                     <Button variant="contained" sx={{m: '0.2rem'}} onClick={onSaveEditedJobPosting}>
                         Save changes</Button>
                 </Box>
