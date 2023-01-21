@@ -1,9 +1,11 @@
 package com.github.liliancharlotte.service;
 
+import com.github.liliancharlotte.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,6 +23,7 @@ class UserServiceTest {
 
     @Test
     void whenUpdateUserWithIdThatDoesNotExistThenThrowException() {
-        assertThrows(NoSuchElementException.class, () -> userService.updateUser("1234", null));
+        User testDummy = new User("2", "Dummy", new ArrayList<>());
+        assertThrows(NoSuchElementException.class, () -> userService.updateUser("1234", testDummy));
     }
 }
