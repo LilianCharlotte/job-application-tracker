@@ -1,10 +1,7 @@
 package com.github.liliancharlotte.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.liliancharlotte.model.ColumnStatus;
-import com.github.liliancharlotte.model.JobPosting;
-import com.github.liliancharlotte.model.User;
-import com.github.liliancharlotte.model.WorkModel;
+import com.github.liliancharlotte.model.*;
 import com.github.liliancharlotte.repository.UserRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -136,5 +132,35 @@ class UserControllerTest {
         assertEquals(updatedUser, expectedUser);
     }
 
+    @Test
+    @DirtiesContext
+    void addJobPostingToUser_expectStatusToBeOkAndCompareJobPosting() throws Exception {
+        User user = new User("13", "test", new ArrayList<>());
+        userRepo.save(user);
 
+        JobPostingRequest jobPostingRequest = new JobPostingRequest("testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN);
+        String response = mockMvc.perform(put(USER_ENDPOINT + "/13/jobPosting")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(jobPostingRequest)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        User actualUser = objectMapper.readValue(response, User.class);
+        JobPosting actualJobPosting = actualUser.jobPostings().get(0);
+        assertAll(
+                () -> assertEquals("testCompany", actualJobPosting.companyName()),
+                () -> assertTrue(actualJobPosting.isUnsolicited()),
+                () -> assertEquals("", actualJobPosting.jobTitle()),
+                () -> assertEquals("", actualJobPosting.jobDescription()),
+                () -> assertEquals("testCompany.com", actualJobPosting.jobPostingLink()),
+                () -> assertEquals(WorkModel.IN_OFFICE, actualJobPosting.remote()),
+                () -> assertEquals("Berlin", actualJobPosting.locatedAt()),
+                () -> assertEquals(ColumnStatus.INTERESTED_IN, actualJobPosting.status())
+        );
+    }
 }
+
+
+
