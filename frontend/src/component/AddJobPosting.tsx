@@ -101,6 +101,11 @@ export default function AddJobPosting(props: AddJobPostingProps) {
 
     }
 
+    function onDiscardChanges(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        navigate("/");
+    }
+
     return (<div>
         <Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
             <Card sx={{display: 'flex', flexDirection: 'row', padding: '2rem'}}>
@@ -242,7 +247,8 @@ export default function AddJobPosting(props: AddJobPostingProps) {
                         </Grid>
                     </Box>
                     <Box sx={{display: 'flex', justifyContent: 'right', mr: '2rem', mt: '1.5rem'}}>
-                        <Button variant="contained" sx={{m: '0.2rem'}}>Discard changes</Button>
+                        <Button variant="contained" sx={{m: '0.2rem'}} onClick={onDiscardChanges}>Discard
+                            changes</Button>
                         <Button variant="contained" sx={{m: '0.2rem'}} onClick={onSaveJobPosting}>
                             Save job posting</Button>
                     </Box>
