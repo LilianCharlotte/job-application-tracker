@@ -38,7 +38,7 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    private User getUser(String userId) {
+    public User getUser(String userId) {
         Optional<User> userOpt = userRepo.findById(userId);
         if (userOpt.isEmpty()) {
             throw new NoSuchElementException("User %s not found".formatted(userId));
