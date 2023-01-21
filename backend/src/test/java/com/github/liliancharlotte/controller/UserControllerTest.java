@@ -160,6 +160,42 @@ class UserControllerTest {
                 () -> assertEquals(ColumnStatus.INTERESTED_IN, actualJobPosting.status())
         );
     }
+
+    @Test
+    @DirtiesContext
+    void editJobPosting_expectStatusToBeOKAndCompareJobPosting() throws Exception {
+        JobPosting jobPosting = new JobPosting("903", "testCompanyName", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN);
+        List<JobPosting> jobPostings = new ArrayList<>();
+        jobPostings.add(jobPosting);
+
+        User user = new User("13", "test", jobPostings);
+        userRepo.save(user);
+
+        JobPostingRequest jobPostingRequest = new JobPostingRequest("editedTestCompanyName", true, "", "", "editedLinkTestCompany.com", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN);
+
+        String response = mockMvc.perform(put(USER_ENDPOINT + "/13/jobPosting/903")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(jobPostingRequest)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        User actualUser = objectMapper.readValue(response, User.class);
+        JobPosting actualJobPosting = actualUser.jobPostings().get(0);
+        assertAll(
+                () -> assertEquals("editedTestCompanyName", actualJobPosting.companyName()),
+                () -> assertTrue(actualJobPosting.isUnsolicited()),
+                () -> assertEquals("", actualJobPosting.jobTitle()),
+                () -> assertEquals("", actualJobPosting.jobDescription()),
+                () -> assertEquals("editedLinkTestCompany.com", actualJobPosting.jobPostingLink()),
+                () -> assertEquals(WorkModel.IN_OFFICE, actualJobPosting.remote()),
+                () -> assertEquals("Hamburg", actualJobPosting.locatedAt()),
+                () -> assertEquals(ColumnStatus.INTERESTED_IN, actualJobPosting.status())
+        );
+
+
+    }
 }
 
 
