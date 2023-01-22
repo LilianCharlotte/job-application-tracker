@@ -7,6 +7,7 @@ import {ColumnStatus, JobPostingRequest} from "../model/JobPosting";
 import AddJobPosting from "./AddJobPosting";
 import Navbar from "./Navbar";
 import EditJobPosting from "./EditJobPosting";
+import MoveToSubmittedColumn from "./MoveToSubmittedColumn";
 
 export default function UserApp() {
 
@@ -51,6 +52,7 @@ export default function UserApp() {
                                <p>User is undefined.</p>}/>
                     <Route path="/editJobPosting"
                            element={<EditJobPosting handleEditJobPosting={handleEditJobPosting}/>}/>
+                    <Route path={"/editor"} element={<MoveToSubmittedColumn/>}></Route>
                 </Routes>
             </Container>
         </Grid>
