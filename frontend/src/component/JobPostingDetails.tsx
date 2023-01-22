@@ -1,6 +1,6 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import {Box, Button, Card, CardContent, Link, Popover, Typography} from "@mui/material";
-import {MouseEvent, useState} from "react";
+import {Box, Button, Card, CardContent, Link, Menu, MenuItem, Typography} from "@mui/material";
+import {MouseEvent, MouseEventHandler, useState} from "react";
 import {ColumnStatus} from "../model/JobPosting";
 
 type JobPostingDetailsProps = {
@@ -26,24 +26,46 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    function stringToColumnStatus(laneToMoveTo: string): ColumnStatus {
-        if (laneToMoveTo === "'Interested in'") {
-            return "INTERESTED_IN";
-        } else if (laneToMoveTo === "'Currently working on'") {
-            return "CURRENTLY_WORKING_ON";
-        } else {
-            throw new Error("Invalid")
+    function otherStatusesThanCurrent(): Array<ColumnStatus> {
+        switch (jobPosting.status) {
+            case "INTERESTED_IN":
+                return ["CURRENTLY_WORKING_ON", "APPLICATION_SUBMITTED"];
+            case "CURRENTLY_WORKING_ON":
+                return ["INTERESTED_IN", "APPLICATION_SUBMITTED"];
+            case "APPLICATION_SUBMITTED":
+                return ["INTERVIEW_SCHEDULED", "DECIDING_ON_JOB_OFFERING"];
+            case "INTERVIEW_SCHEDULED":
+                return ["DECIDING_ON_JOB_OFFERING"];
+            case "DECIDING_ON_JOB_OFFERING":
+                return [];
+            default:
+                throw new Error("Invalid move options");
         }
     }
 
-    const laneToMoveTo = jobPosting.status === "INTERESTED_IN" ? "'Currently working on'" : "'Interested in'";
+    function mapColumnStatusToText(columnStatus: ColumnStatus) {
+        switch (columnStatus) {
+            case "INTERESTED_IN":
+                return "Interested in";
+            case "CURRENTLY_WORKING_ON":
+                return "Currently working on";
+            case "APPLICATION_SUBMITTED":
+                return "Application submitted";
+            case "INTERVIEW_SCHEDULED":
+                return "Interview scheduled";
+            case "DECIDING_ON_JOB_OFFERING":
+                return "Deciding on job offering";
 
-    function handleMove(event: MouseEvent<HTMLDivElement>) {
-        event.preventDefault()
-        props.handleMoveJobPosting(jobPosting.id, stringToColumnStatus(laneToMoveTo));
-        navigate("/");
+        }
     }
 
+    function moveJobPosting(toColumnStatus: ColumnStatus): MouseEventHandler {
+        return function handleMove(event: MouseEvent<HTMLDivElement>) {
+            event.preventDefault()
+            props.handleMoveJobPosting(jobPosting.id, toColumnStatus);
+            navigate("/");
+        }
+    }
 
     function handleDelete(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
@@ -82,13 +104,13 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
                 <Box/>
                 <CardContent sx={{width: 51}}>
                     <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                        <Button size="small" variant="contained" sx={{mb: '0.2rem'}}
-                                onClick={handleOpenPopover}>move</Button>
-                        <Popover
+                        {otherStatusesThanCurrent().length !== 0 &&
+                            <Button size="small" variant="contained" sx={{mb: '0.2rem'}}
+                                    onClick={handleOpenPopover}>move</Button>}
+                        <Menu
                             id={id}
                             open={open}
                             anchorEl={anchorEl}
-                            onClick={handleMove}
                             onClose={handleClose}
                             anchorOrigin={{
                                 vertical: 'center',
@@ -99,10 +121,11 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
                                 horizontal: 'left'
                             }}
                         >
-                            <Typography
-                                sx={{p: 1}}>move
-                                to {laneToMoveTo} </Typography>
-                        </Popover>
+                            {otherStatusesThanCurrent().map(item => {
+                                return <MenuItem key={item} onClick={moveJobPosting(item)}>move to
+                                    '{mapColumnStatusToText(item)}'</MenuItem>
+                            })}
+                        </Menu>
                         <Button size="small" variant="contained" sx={{mb: '0.2rem'}}
                                 onClick={handleEditJobPosting}>edit</Button>
                         <Button size="small" variant="contained" sx={{mb: '0.2rem'}}
