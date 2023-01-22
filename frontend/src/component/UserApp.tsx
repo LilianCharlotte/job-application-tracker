@@ -52,7 +52,7 @@ export default function UserApp() {
                                <p>User is undefined.</p>}/>
                     <Route path="/editJobPosting"
                            element={<EditJobPosting handleEditJobPosting={handleEditJobPosting}/>}/>
-                    <Route path={"/editor"} element={<MoveToSubmittedColumn/>}></Route>
+                    <Route path={"/moveToSubmitted"} element={<MoveToSubmittedColumn/>}></Route>
                 </Routes>
             </Container>
         </Grid>
