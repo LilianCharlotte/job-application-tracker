@@ -1,4 +1,9 @@
-export type ColumnStatus = "INTERESTED_IN" | "CURRENTLY_WORKING_ON"
+export type ColumnStatus =
+    "INTERESTED_IN"
+    | "CURRENTLY_WORKING_ON"
+    | "APPLICATION_SUBMITTED"
+    | "INTERVIEW_SCHEDULED"
+    | "DECIDING_ON_JOB_OFFERING"
 export type WorkModel = "IN_OFFICE" | "REMOTE" | "HYBRID"
 
 export type JobPosting = {
