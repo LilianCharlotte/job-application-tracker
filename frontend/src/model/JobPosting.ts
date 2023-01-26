@@ -15,7 +15,8 @@ export type JobPosting = {
     jobPostingLink: string,
     remote: WorkModel,
     locatedAt: string,
-    status: ColumnStatus
+    status: ColumnStatus,
+    applicationSubmissionDate: string
 }
 
 export type JobPostingRequest = {
@@ -26,5 +27,6 @@ export type JobPostingRequest = {
     jobPostingLink: string,
     remote: WorkModel,
     locatedAt: string,
-    status: ColumnStatus
+    status: ColumnStatus,
+    applicationSubmissionDate: string
 }
