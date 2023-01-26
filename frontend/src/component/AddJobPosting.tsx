@@ -34,7 +34,8 @@ export default function AddJobPosting(props: AddJobPostingProps) {
         locatedAt: "",
         remote: "IN_OFFICE",
         status: "INTERESTED_IN",
-        isUnsolicited: false
+        isUnsolicited: false,
+        applicationSubmissionDate: ""
     });
     const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {MouseEvent, useState} from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {Button, Grid, Paper, TextField, Typography} from "@mui/material";
@@ -6,23 +6,47 @@ import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {Dayjs} from "dayjs";
 import {theme} from "../App";
+import {useLocation, useNavigate} from "react-router-dom";
+import {JobPostingRequest} from "../model/JobPosting";
 
+type MoveToSubmittedColumnProps = {
+    handleAddApplicationSubmissionDate(jobPostingId: string, jobPostingRequest: JobPostingRequest): void
+}
 
-export default function MoveToSubmittedColumn() {
+export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps) {
     const [value, setValue] = useState(`
         <h3>Notes</h3>
         <br/> <br/> <br/>
         <h3>Questions</h3>
     `);
     const [date, setDate] = useState<Dayjs | null>();
+    const navigate = useNavigate();
+    const {state} = useLocation();
+    const {jobPosting} = state;
 
     function dateToString() {
         if (date) {
-            date.toISOString();
-        }
-
-
+            return date.toISOString();
+        } else return ""
     }
+
+    function handleSaveDate(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        const jobPostingRequest: JobPostingRequest = {
+            companyName: jobPosting.companyName,
+            isUnsolicited: jobPosting.isUnsolicited,
+            jobTitle: jobPosting.jobTitle,
+            jobDescription: jobPosting.jobDescription,
+            jobPostingLink: jobPosting.jobPostingLink,
+            remote: jobPosting.remote,
+            locatedAt: jobPosting.locatedAt,
+            status: "APPLICATION_SUBMITTED",
+            applicationSubmissionDate: dateToString()
+        }
+        props.handleAddApplicationSubmissionDate(jobPosting.id, jobPostingRequest);
+        navigate("/");
+    }
+
 
     return <Paper
         sx={{display: "flex", alignItems: 'center', flexDirection: 'column', maxWidth: '620px', margin: 'auto'}}>
@@ -73,6 +97,6 @@ export default function MoveToSubmittedColumn() {
                 </div>
             </Grid>
         </Grid>
-        <Button variant="contained" sx={{m: '1rem'}}>
+        <Button variant="contained" sx={{m: '1rem'}} onClick={handleSaveDate}>
             Save</Button> </Paper>
 }

@@ -26,7 +26,6 @@ export default function UserApp() {
         editJobPostingInUser(jobPostingId, jobPostingRequest);
     }
 
-
     return <BrowserRouter>
         {user ? <Navbar user={user}/> : <p>User is undefined.</p>}
         <Grid
@@ -52,7 +51,9 @@ export default function UserApp() {
                                <p>User is undefined.</p>}/>
                     <Route path="/editJobPosting"
                            element={<EditJobPosting handleEditJobPosting={handleEditJobPosting}/>}/>
-                    <Route path={"/moveToSubmitted"} element={<MoveToSubmittedColumn/>}></Route>
+                    <Route path={"/moveToSubmitted"}
+                           element={<MoveToSubmittedColumn handleAddApplicationSubmissionDate={handleEditJobPosting}/>}
+                    ></Route>
                 </Routes>
             </Container>
         </Grid>
