@@ -99,7 +99,8 @@ export default function EditJobPosting(props: EditJobPostingProps) {
             jobPostingLink: editedJobPosting.jobPostingLink,
             remote: editedJobPosting.remote,
             locatedAt: editedJobPosting.locatedAt,
-            status: editedJobPosting.status
+            status: editedJobPosting.status,
+            applicationSubmissionDate: editedJobPosting.applicationSubmissionDate
         }
         onSaveCheckIfJobPostingIsUnsolicited(editedJobPostingRequest);
         props.handleEditJobPosting(jobPosting.id, editedJobPostingRequest);

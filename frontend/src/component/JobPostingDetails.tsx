@@ -62,11 +62,11 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
     function moveJobPosting(toColumnStatus: ColumnStatus): MouseEventHandler {
         return function handleMove(event: MouseEvent<HTMLDivElement>) {
             event.preventDefault()
-            props.handleMoveJobPosting(jobPosting.id, toColumnStatus);
             if (toColumnStatus === "APPLICATION_SUBMITTED") {
-                navigate("/moveToSubmitted")
+                navigate('/moveToSubmitted', {state: {jobPosting: jobPosting}});
                 return;
             }
+            props.handleMoveJobPosting(jobPosting.id, toColumnStatus);
             navigate("/");
         }
     }
@@ -103,6 +103,8 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
                         Working remotely: {jobPosting.remote === "REMOTE" && "yes"}
                         {jobPosting.remote === "IN_OFFICE" && "In office only"}
                         {jobPosting.remote === "HYBRID" && "hybrid"} <br/>
+
+                        {jobPosting.status === "APPLICATION_SUBMITTED" && `Application submission date: ${new Date(jobPosting.applicationSubmissionDate).toLocaleString()}`}
                     </Box>
                 </CardContent>
                 <Box/>
