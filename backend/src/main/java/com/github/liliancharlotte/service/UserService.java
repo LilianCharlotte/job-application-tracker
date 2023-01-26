@@ -33,7 +33,7 @@ public class UserService {
         User user = getUser(userId);
 
         String generateJobPostingId = idService.generateId();
-        JobPosting jobPostingToAdd = new JobPosting(generateJobPostingId, jobPostingRequest.companyName(), jobPostingRequest.isUnsolicited(), jobPostingRequest.jobTitle(), jobPostingRequest.jobDescription(), jobPostingRequest.jobPostingLink(), jobPostingRequest.remote(), jobPostingRequest.locatedAt(), ColumnStatus.INTERESTED_IN, jobPostingRequest.applicationSubmissionDate());
+        JobPosting jobPostingToAdd = new JobPosting(generateJobPostingId, jobPostingRequest.companyName(), jobPostingRequest.isUnsolicited(), jobPostingRequest.jobTitle(), jobPostingRequest.jobDescription(), jobPostingRequest.jobPostingLink(), jobPostingRequest.remote(), jobPostingRequest.locatedAt(), ColumnStatus.INTERESTED_IN, jobPostingRequest.applicationSubmissionDate(), jobPostingRequest.notes());
         user.jobPostings().add(jobPostingToAdd);
         return userRepo.save(user);
     }
@@ -49,7 +49,7 @@ public class UserService {
     public User editJobPostingInUser(String userId, String jobPostingId, JobPostingRequest jobPostingRequest) {
         User user = getUser(userId);
         int index = findJobPostingIndex(user.jobPostings(), jobPostingId).orElseThrow();
-        JobPosting editedJobPosting = new JobPosting(jobPostingId, jobPostingRequest.companyName(), jobPostingRequest.isUnsolicited(), jobPostingRequest.jobTitle(), jobPostingRequest.jobDescription(), jobPostingRequest.jobPostingLink(), jobPostingRequest.remote(), jobPostingRequest.locatedAt(), jobPostingRequest.status(), jobPostingRequest.applicationSubmissionDate());
+        JobPosting editedJobPosting = new JobPosting(jobPostingId, jobPostingRequest.companyName(), jobPostingRequest.isUnsolicited(), jobPostingRequest.jobTitle(), jobPostingRequest.jobDescription(), jobPostingRequest.jobPostingLink(), jobPostingRequest.remote(), jobPostingRequest.locatedAt(), jobPostingRequest.status(), jobPostingRequest.applicationSubmissionDate(), jobPostingRequest.notes());
         user.jobPostings().set(index, editedJobPosting);
         return userRepo.save(user);
     }
