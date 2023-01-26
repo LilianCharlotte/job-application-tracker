@@ -13,5 +13,6 @@ public record JobPosting(
         WorkModel remote,
         String locatedAt,
         ColumnStatus status,
-        String applicationSubmissionDate) {
+        String applicationSubmissionDate,
+        String notes) {
 }
