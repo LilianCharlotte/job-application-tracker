@@ -63,6 +63,10 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
         return function handleMove(event: MouseEvent<HTMLDivElement>) {
             event.preventDefault()
             props.handleMoveJobPosting(jobPosting.id, toColumnStatus);
+            if (toColumnStatus === "APPLICATION_SUBMITTED") {
+                navigate("/moveToSubmitted")
+                return;
+            }
             navigate("/");
         }
     }

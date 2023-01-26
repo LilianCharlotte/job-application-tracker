@@ -39,7 +39,7 @@ export default function MoveToSubmittedColumn() {
         </Typography>
         <Grid container>
             <Grid item xs={5} sx={{m: '1rem', width: '100%', fontSize: '1.2rem'}}>
-                When did you submit your application?
+                1. When did you submit your application?
             </Grid>
             <Grid item xs={5} sx={{m: '1rem'}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -55,8 +55,10 @@ export default function MoveToSubmittedColumn() {
                 </LocalizationProvider>
             </Grid>
 
-            <Grid item xs={7} sx={{m: '1rem'}}>
-                Some space for notes about the company and for questions for your future interview:
+            <Grid item xs={5} sx={{m: '1rem', width: '100%', fontSize: '1.2rem'}}>
+                2. Notes: </Grid>
+            <Grid item xs={5} sx={{m: '1rem'}}>
+                Some space for notes about the company and for questions for your future interview. ⬇️
             </Grid>
 
             <Grid item xs={12} sx={{m: '1rem'}}>
