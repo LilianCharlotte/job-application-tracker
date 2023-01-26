@@ -52,7 +52,8 @@ class UserControllerTest {
                                                     "jobPostingLink": "testCompany.com",
                                                     "remote": "IN_OFFICE",
                                                     "locatedAt": "Berlin",
-                                                    "status": "INTERESTED_IN"
+                                                    "status": "INTERESTED_IN",
+                                                    "applicationSubmissionDate": ""
                                                 }
                                             ]
                                         }
@@ -65,7 +66,7 @@ class UserControllerTest {
 
         User actualUser = objectMapper.readValue(response, User.class);
         assertEquals("test", actualUser.name());
-        JobPosting expectedJobPosting = new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN);
+        JobPosting expectedJobPosting = new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN, "");
         assertEquals(expectedJobPosting, actualUser.jobPostings().get(0));
     }
 
@@ -88,7 +89,7 @@ class UserControllerTest {
     @Test
     @DirtiesContext
     void updateUserAndExpectUpdatedUserWithSameId() throws Exception {
-        JobPosting jobPosting = new JobPosting("903", "testCompanyName", true, "", "", "", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN);
+        JobPosting jobPosting = new JobPosting("903", "testCompanyName", true, "", "", "", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN, "");
         List<JobPosting> jobPostings = new ArrayList<>();
         jobPostings.add(jobPosting);
 
@@ -112,7 +113,8 @@ class UserControllerTest {
                                                          "jobPostingLink": "testCompany.com",
                                                          "remote": "IN_OFFICE",
                                                          "locatedAt": "Berlin",
-                                                         "status": "INTERESTED_IN"
+                                                         "status": "INTERESTED_IN",
+                                                         "applicationSubmissionDate": ""
                                                                 }
                                                          ]
                                                     }
@@ -125,7 +127,7 @@ class UserControllerTest {
 
         User updatedUser = objectMapper.readValue(response, User.class);
         List<JobPosting> expectedJobPostings = new ArrayList<>();
-        expectedJobPostings.add(new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN));
+        expectedJobPostings.add(new JobPosting("12345", "testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN, ""));
         User expectedUser = new User("13", "test", expectedJobPostings);
 
         assertNotEquals(user, updatedUser);
@@ -138,7 +140,7 @@ class UserControllerTest {
         User user = new User("13", "test", new ArrayList<>());
         userRepo.save(user);
 
-        JobPostingRequest jobPostingRequest = new JobPostingRequest("testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN);
+        JobPostingRequest jobPostingRequest = new JobPostingRequest("testCompany", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Berlin", ColumnStatus.INTERESTED_IN, "");
         String response = mockMvc.perform(put(USER_ENDPOINT + "/13/jobPosting")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(jobPostingRequest)))
@@ -164,14 +166,14 @@ class UserControllerTest {
     @Test
     @DirtiesContext
     void editJobPosting_expectStatusToBeOKAndCompareJobPosting() throws Exception {
-        JobPosting jobPosting = new JobPosting("903", "testCompanyName", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN);
+        JobPosting jobPosting = new JobPosting("903", "testCompanyName", true, "", "", "testCompany.com", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN, "");
         List<JobPosting> jobPostings = new ArrayList<>();
         jobPostings.add(jobPosting);
 
         User user = new User("13", "test", jobPostings);
         userRepo.save(user);
 
-        JobPostingRequest jobPostingRequest = new JobPostingRequest("editedTestCompanyName", true, "", "", "editedLinkTestCompany.com", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN);
+        JobPostingRequest jobPostingRequest = new JobPostingRequest("editedTestCompanyName", true, "", "", "editedLinkTestCompany.com", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN, "");
 
         String response = mockMvc.perform(put(USER_ENDPOINT + "/13/jobPosting/903")
                         .contentType(MediaType.APPLICATION_JSON)

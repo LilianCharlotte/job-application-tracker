@@ -31,7 +31,7 @@ class UserServiceTest {
     void whenEditJobPostingInUserWithJobPostingIdThatDoesNotExistThenThrowException() {
         UserRequest userRequest = new UserRequest("dummy", new ArrayList<>());
         User testDummy = userService.addUser(userRequest);
-        JobPostingRequest jobPostingRequest = new JobPostingRequest("editedTestCompanyName", true, "", "", "editedLinkTestCompany.com", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN);
+        JobPostingRequest jobPostingRequest = new JobPostingRequest("editedTestCompanyName", true, "", "", "editedLinkTestCompany.com", WorkModel.IN_OFFICE, "Hamburg", ColumnStatus.INTERESTED_IN, "");
 
         String userId = testDummy.id();
         assertThrows(NoSuchElementException.class, () -> userService.editJobPostingInUser(userId, "904", jobPostingRequest));
