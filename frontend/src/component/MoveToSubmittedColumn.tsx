@@ -16,7 +16,7 @@ type MoveToSubmittedColumnProps = {
 export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps) {
     const [value, setValue] = useState(`
         <h3>Notes</h3>
-        <br/> <br/> <br/>
+        <br/>
         <h3>Questions</h3>
     `);
     const [date, setDate] = useState<Dayjs | null>();
@@ -27,7 +27,7 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
     function dateToString() {
         if (date) {
             return date.toISOString();
-        } else return ""
+        } else return "fehler"
     }
 
     function handleSaveDate(event: MouseEvent<HTMLButtonElement>) {
@@ -41,7 +41,8 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
             remote: jobPosting.remote,
             locatedAt: jobPosting.locatedAt,
             status: "APPLICATION_SUBMITTED",
-            applicationSubmissionDate: dateToString()
+            applicationSubmissionDate: dateToString(),
+            notes: value
         }
         props.handleAddApplicationSubmissionDate(jobPosting.id, jobPostingRequest);
         navigate("/");

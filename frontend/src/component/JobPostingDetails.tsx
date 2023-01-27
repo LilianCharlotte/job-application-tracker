@@ -1,7 +1,8 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import {Box, Button, Card, CardContent, Link, Menu, MenuItem, Typography} from "@mui/material";
-import {MouseEvent, MouseEventHandler, useState} from "react";
+import {Box, Button, Card, CardContent, Divider, Link, Menu, MenuItem, Typography} from "@mui/material";
+import React, {MouseEvent, MouseEventHandler, useState} from "react";
 import {ColumnStatus} from "../model/JobPosting";
+import {theme} from "../App";
 
 type JobPostingDetailsProps = {
     handleMoveJobPosting(idJobPosting: string, laneToMoveTo: ColumnStatus): void
@@ -86,25 +87,35 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
         <Box sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
             <Card sx={{display: 'flex', flexDirection: 'row', padding: '2rem'}}>
                 <CardContent sx={{flex: '1 0 auto', padding: 'unset'}}>
-                    <Typography component={"span"} sx={{fontSize: 11}} color="text.secondary" textAlign="left"
-                                gutterBottom>
-                        Id: {jobPosting.id}
-                    </Typography>
                     <Box component="div" sx={{maxWidth: '500px'}}>
-                        Company name: {jobPosting.companyName} <br/>
+                        <Typography variant="h3" gutterBottom sx={{color: theme.palette.primary.main}}>
+                            Details
+                        </Typography>
 
-                        {jobPosting.isUnsolicited ? "Write an unsolicited application." : "Job title: " + jobPosting.jobTitle}
+                        <Typography sx={{fontSize: '1.2rem'}}>
+                            Company name: &ensp;
+                            {jobPosting.companyName} <Divider/>
+                            {jobPosting.isUnsolicited ? <>{"Write an unsolicited application."}<Divider/> </> : <>
+                                {"Job title: "}&ensp;{jobPosting.jobTitle}<Divider/> </>}
+                            {!jobPosting.isUnsolicited && <>{"Job description: "}&emsp;{jobPosting.jobDescription}<Divider/></>}
 
-                        {!jobPosting.isUnsolicited && <><br/>{"Job description: " + jobPosting.jobDescription}</>} <br/>
-                        Link: <Link href={jobPosting.jobPostingLink}
-                                    underline="hover" color="secondary">{jobPosting.jobPostingLink}</Link> <br/>
-                        Located in: {jobPosting.locatedAt} <br/>
+                            <Link href={jobPosting.jobPostingLink}
+                                  underline="hover" color="secondary">{jobPosting.jobPostingLink}</Link>
+                            <Divider/>
 
-                        Working remotely: {jobPosting.remote === "REMOTE" && "yes"}
-                        {jobPosting.remote === "IN_OFFICE" && "In office only"}
-                        {jobPosting.remote === "HYBRID" && "hybrid"} <br/>
+                            Located in:&ensp; {jobPosting.locatedAt} <Divider/>
 
-                        {jobPosting.status === "APPLICATION_SUBMITTED" && `Application submission date: ${new Date(jobPosting.applicationSubmissionDate).toLocaleString()}`}
+                            Working remotely:&ensp; {jobPosting.remote === "REMOTE" && "yes"}
+                            {jobPosting.remote === "IN_OFFICE" && "In office only"}
+                            {jobPosting.remote === "HYBRID" && "hybrid"} <Divider/>
+
+                            {jobPosting.status === "APPLICATION_SUBMITTED" && <>{"Application submission date: "}
+                                {new Date(jobPosting.applicationSubmissionDate).toLocaleString()}h <Divider/></>}
+                        </Typography>
+                        {jobPosting.status === "APPLICATION_SUBMITTED" && <>
+                            <div dangerouslySetInnerHTML={{__html: jobPosting.notes}}></div>
+                            <Divider/></>
+                        }
                     </Box>
                 </CardContent>
                 <Box/>
