@@ -3,6 +3,7 @@ import {Box, Button, Card, CardContent, Divider, Link, Menu, MenuItem, Typograph
 import React, {MouseEvent, MouseEventHandler, useState} from "react";
 import {ColumnStatus} from "../model/JobPosting";
 import {theme} from "../App";
+import * as sanitizeHtml from 'sanitize-html';
 
 type JobPostingDetailsProps = {
     handleMoveJobPosting(idJobPosting: string, laneToMoveTo: ColumnStatus): void
@@ -113,7 +114,8 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
                                 {new Date(jobPosting.applicationSubmissionDate).toLocaleString()}h <Divider/></>}
                         </Typography>
                         {jobPosting.status === "APPLICATION_SUBMITTED" && <>
-                            <div dangerouslySetInnerHTML={{__html: jobPosting.notes}}></div>
+                            <div
+                                dangerouslySetInnerHTML={{__html: sanitizeHtml.default(jobPosting.notes)}}></div>
                             <Divider/></>
                         }
                     </Box>
