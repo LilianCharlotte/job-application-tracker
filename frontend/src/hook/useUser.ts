@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {User} from "../model/User";
-import {addJobPostingToUser, editJobPosting, getUserById, updateUser} from "../apiCalls";
+import {addJobPostingToUser, editJobPosting, getUserById, updateUser, uploadPDF} from "../apiCalls";
 import {ColumnStatus, JobPostingRequest} from "../model/JobPosting";
 
 export default function useUser(id: string) {
@@ -74,5 +74,14 @@ export default function useUser(id: string) {
             .catch(console.error);
     }
 
-    return {user, updateJobPostingStatus, deleteJobPosting, addJobPosting, editJobPostingInUser};
+    function uploadPDFApplication(jobPostingId: string, pdfFile: File) {
+        if (!user) {
+            console.warn("User is undefined.");
+            return;
+        }
+        uploadPDF(user.id, jobPostingId, pdfFile)
+            .catch(console.error);
+    }
+
+    return {user, updateJobPostingStatus, deleteJobPosting, addJobPosting, editJobPostingInUser, uploadPDFApplication};
 }

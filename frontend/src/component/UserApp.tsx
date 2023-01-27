@@ -11,7 +11,14 @@ import MoveToSubmittedColumn from "./MoveToSubmittedColumn";
 
 export default function UserApp() {
 
-    const {user, addJobPosting, updateJobPostingStatus, deleteJobPosting, editJobPostingInUser} = useUser("1");
+    const {
+        user,
+        addJobPosting,
+        updateJobPostingStatus,
+        deleteJobPosting,
+        editJobPostingInUser,
+        uploadPDFApplication
+    } = useUser("1");
 
 
     function handleMoveJobPosting(jobPostingId: string, laneToMoveTo: ColumnStatus) {
@@ -24,6 +31,10 @@ export default function UserApp() {
 
     function handleEditJobPosting(jobPostingId: string, jobPostingRequest: JobPostingRequest) {
         editJobPostingInUser(jobPostingId, jobPostingRequest);
+    }
+
+    function handleUploadPDFApplication(jobPostingId: string, pdf: File) {
+        uploadPDFApplication(jobPostingId, pdf);
     }
 
     return <BrowserRouter>
@@ -52,7 +63,8 @@ export default function UserApp() {
                     <Route path="/editJobPosting"
                            element={<EditJobPosting handleEditJobPosting={handleEditJobPosting}/>}/>
                     <Route path={"/moveToSubmitted"}
-                           element={<MoveToSubmittedColumn handleAddApplicationSubmissionDate={handleEditJobPosting}/>}
+                           element={<MoveToSubmittedColumn handleAddApplicationSubmissionDate={handleEditJobPosting}
+                                                           handleUploadApplication={handleUploadPDFApplication}/>}
                     ></Route>
                 </Routes>
             </Container>

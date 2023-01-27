@@ -21,3 +21,12 @@ export function editJobPosting(userId: string, jobPostingId: string, jobPostingR
     return axios.put(`/api/user/${userId}/jobPosting/${jobPostingId}`, jobPostingRequest)
         .then(response => response.data)
 }
+
+export function uploadPDF(userId: string, jobPostingId: string, pdfFile: File) {
+    return axios.post(`/api/user/${userId}/jobPosting/${jobPostingId}/file`, {"file": pdfFile}, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    })
+}
+

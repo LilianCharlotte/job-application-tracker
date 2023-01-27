@@ -1,4 +1,4 @@
-import React, {MouseEvent, useState} from 'react';
+import React, {ChangeEvent, MouseEvent, useState} from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {Button, Grid, Paper, TextField, Typography} from "@mui/material";
@@ -10,7 +10,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {JobPostingRequest} from "../model/JobPosting";
 
 type MoveToSubmittedColumnProps = {
-    handleAddApplicationSubmissionDate(jobPostingId: string, jobPostingRequest: JobPostingRequest): void
+    handleAddApplicationSubmissionDate(jobPostingId: string, jobPostingRequest: JobPostingRequest): void,
+    handleUploadApplication(jobPostingId: string, pdf: File): void
 }
 
 export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps) {
@@ -20,6 +21,7 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
         <h3>Questions</h3>
     `);
     const [date, setDate] = useState<Dayjs | null>();
+    const [file, setFile] = useState<File>();
     const navigate = useNavigate();
     const {state} = useLocation();
     const {jobPosting} = state;
@@ -30,7 +32,7 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
         } else return "fehler"
     }
 
-    function handleSaveDate(event: MouseEvent<HTMLButtonElement>) {
+    function handleUploadAndSave(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
         const jobPostingRequest: JobPostingRequest = {
             companyName: jobPosting.companyName,
@@ -45,9 +47,18 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
             notes: value
         }
         props.handleAddApplicationSubmissionDate(jobPosting.id, jobPostingRequest);
+        if (file) {
+            props.handleUploadApplication(jobPosting.id, file)
+        }
         navigate("/");
     }
 
+    function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+        event.preventDefault()
+        if (event.target.files) {
+            setFile(event.target.files[0]);
+        }
+    }
 
     return <Paper
         sx={{display: "flex", alignItems: 'center', flexDirection: 'column', maxWidth: '620px', margin: 'auto'}}>
@@ -81,7 +92,21 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
             </Grid>
 
             <Grid item xs={5} sx={{m: '1rem', width: '100%', fontSize: '1.2rem'}}>
-                2. Notes: </Grid>
+                2. Upload your application: </Grid>
+
+            <Grid item xs={5} sx={{m: '1rem'}}>
+                <input style={{display: "none"}} id="file-upload" type="file" accept="application/pdf"
+                       onChange={handleFileChange}/>
+                <label htmlFor="file-upload">
+                    <Button variant="contained" component="span" sx={{m: '0.2rem', mb: '0.8rem'}}>
+                        Choose File
+                    </Button>
+                </label>
+                <div>{file && `${file.name}`}</div>
+            </Grid>
+
+            <Grid item xs={5} sx={{m: '1rem', width: '100%', fontSize: '1.2rem'}}>
+                3. Notes: </Grid>
             <Grid item xs={5} sx={{m: '1rem'}}>
                 Some space for notes about the company and for questions for your future interview. ⬇️
             </Grid>
@@ -98,6 +123,8 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
                 </div>
             </Grid>
         </Grid>
-        <Button variant="contained" sx={{m: '1rem'}} onClick={handleSaveDate}>
-            Save</Button> </Paper>
+
+
+        <Button variant="contained" sx={{m: '1.6rem'}} onClick={handleUploadAndSave}>
+            Upload and Save</Button> </Paper>
 }
