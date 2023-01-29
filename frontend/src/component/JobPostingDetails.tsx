@@ -93,7 +93,7 @@ export default function JobPostingDetails(props: JobPostingDetailsProps) {
                             Details
                         </Typography>
 
-                        <Typography sx={{fontSize: '1.2rem'}}>
+                        <Typography sx={{fontSize: '1.2rem'}} component={"div"}>
                             Company name: &ensp;
                             {jobPosting.companyName} <Divider/>
                             {jobPosting.isUnsolicited ? <>{"Write an unsolicited application."}<Divider/> </> : <>
