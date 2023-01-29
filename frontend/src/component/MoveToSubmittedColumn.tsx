@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import {Button, Grid, Paper, TextField, Typography} from "@mui/material";
 import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {Dayjs} from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
 import {theme} from "../App";
 import {useLocation, useNavigate} from "react-router-dom";
 import {JobPostingRequest} from "../model/JobPosting";
@@ -20,7 +20,7 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
         <br/>
         <h3>Questions</h3>
     `);
-    const [date, setDate] = useState<Dayjs | null>();
+    const [date, setDate] = useState<Dayjs | null>(dayjs());
     const [file, setFile] = useState<File>();
     const navigate = useNavigate();
     const {state} = useLocation();
@@ -29,7 +29,7 @@ export default function MoveToSubmittedColumn(props: MoveToSubmittedColumnProps)
     function dateToString() {
         if (date) {
             return date.toISOString();
-        } else return "fehler"
+        } else return "Date ist null. Zeile 32 in MoveToSubmittedColumn."
     }
 
     function handleUploadAndSave(event: MouseEvent<HTMLButtonElement>) {
