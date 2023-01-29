@@ -14,5 +14,6 @@ public record JobPosting(
         String locatedAt,
         ColumnStatus status,
         String applicationSubmissionDate,
-        String notes) {
+        String notes,
+        String fileURL) {
 }

@@ -10,5 +10,6 @@ public record JobPostingRequest(
         String locatedAt,
         ColumnStatus status,
         String applicationSubmissionDate,
-        String notes) {
+        String notes,
+        String fileURL) {
 }
